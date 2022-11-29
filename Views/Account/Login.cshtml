@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "***大学项目库管理系统";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using xmkgl.Models
+@model LoginViewModel
+
+<style>
+    /*检测浏览器版本*/
+    .zbrowser_box {
+        background: #e6e6e6 none repeat scroll 0 0;
+        border-bottom: 1px solid #959595;
+        color: #2b2b2b;
+        font-size: 14px;
+        height: 44px;
+        line-height: 44px;
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+
+    .zbrowser_close {
+        float: right;
+        height: 16px;
+        margin-right: 16px;
+        margin-top: 12px;
+        width: 16px;
+    }
+
+    a {
+        color: #555;
+        text-decoration: none;
+    }
+
+    .zbrowser_txt {
+        float: left;
+    }
+
+        .zbrowser_txt a {
+            color: #002598;
+        }
+
+        .zbrowser_txt span {
+            padding-left: 40px;
+        }
+
+            .zbrowser_txt span a.zyes {
+                -moz-border-bottom-colors: none;
+                -moz-border-left-colors: none;
+                -moz-border-right-colors: none;
+                -moz-border-top-colors: none;
+                background: #fff none repeat scroll 0 0;
+                border-color: #f5f5f5 #f5f5f5 #ccc;
+                border-image: none;
+                border-style: solid;
+                border-width: 1px;
+                margin-right: 10px;
+            }
+
+            .zbrowser_txt span a {
+                -moz-border-bottom-colors: none;
+                -moz-border-left-colors: none;
+                -moz-border-right-colors: none;
+                -moz-border-top-colors: none;
+                background: #f4f4f4 none repeat scroll 0 0;
+                border-color: #eaeaea #eaeaea #c1c1c1;
+                border-image: none;
+                border-style: solid;
+                border-width: 1px;
+                color: #666;
+                display: inline-block;
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+                width: 30px;
+            }
+
+    .prompt_main {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 9999;
+        display: none;
+    }
+</style>
+
+
+
+<div class="prompt_main" id="zmain">
+    <div class="zbrowser">
+        <div class="zbrowser_box">
+            <img class="zbrowser_close" onclick="closezoh()" title="关闭提示" src="~/Scripts/easyui/themes/icons/close_06.png" />
+
+            <p class="zbrowser_txt">
+                &nbsp;&nbsp;&nbsp;&nbsp;温馨提示：为了保证您能获得最佳的体验效果，建议使用<a href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie">IE9以上浏览器</a>、<a href="http://www.firefox.com.cn/download/">火狐浏览器</a>，是否下载？
+                <span>
+                    <a href="javascript:void(0)" onclick="donwload()" class="zyes">是</a>
+                    <a href="javascript:void(0)" onclick="closezoh()">否</a>
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top:10px;padding-bottom:10px">
+    <div class="col-md-12">
+        <div style="float:left">
+            <img src="~/Content/image/loginn_02.png">
+        </div>
+    </div>
+</div>
+
+<div id="loginbg" class="row" style="background-size:cover;background-repeat:no-repeat;background-position:0% 0%;background-image:url(../../Content/image/loginbg_07.jpg);height:500px;width:auto">
+
+    <div class="main_box ">
+
+        <div class="setting">
+            <a title="更换背景" href="javascript:;" onclick="choose_bg()"><span class="glyphicon glyphicon-th-large"></span></a>
+        </div>
+
+        <div class="login_box">
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <div class="input-group" style="margin-top:-10px">
+
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input name="name" type="text" placeholder="请输入用户名" class="form-control" style="height:40px">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input name="Password" type="password" placeholder="请输入密码" class="form-control" style="height:40px">
+                    </div>
+                </div>
+
+
+                <div class="form-group form-inline">
+                    <input id="userCode" name="userCode" class="form-control" style="width:220px;" placeholder="验证码" />
+                    <img title="看不清？" class="img-thumbnail" style="cursor:pointer;vertical-align:middle;margin-left:5px;border:none;" src="~/ashx/CreateValidateCodeHandler.ashx" onclick="this.src = '/ashx/CreateValidateCodeHandler.ashx?_=' + Math.random()" />
+                </div>
+
+
+                <div class="form-group">
+                    <div class="checkbox" style="font-size:14px">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+
+                <div class="form-group" style="padding-top:10px">
+                    <input type="submit" value="登录" class="btn btn-default" style="padding:6px 36px" />
+                </div>
+
+                //错误提示
+                <div id="loginmsg" class="form-group" style="margin-top:5px;margin-bottom:5px">
+                    @Html.ValidationMessageFor(m => m.name, "", new { @class = "login_msg" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "login_msg" })
+                    @Html.ValidationSummary(true, "", new { @class = "login_msg" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row" style="text-align:center;padding-top:15px">
+    <div><span>版权所有：海南师范大学财务处　Copyright &copy; 2016-@DateTime.Now.Year　Financial Dept,Hainnu</span></div>
+    <div><span> 有任何问题与建议请联络：cwc@hainnu.edu.cn、 0898-65884963；技术支持：海南中旗网络科技有限公司</span></div>
+</div>
+
+@section footer{
+    <link href="~/Content/login.css" rel="stylesheet">
+    <script src="~/Scripts/Accountscript/Login.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+
+    <script>
+        function login() {
+            //var userName = document.getElementById('userName').value;
+            //if (userName === '' || userName === undefined) {
+            //    alert('请输入用户名');
+            //    return false;
+            //}
+
+            //var userPass = document.getElementById('userPass').value;
+            //if (userPass === '' || userPass === undefined) {
+            //    alert('请输入密码');
+            //    return false;
+            //}
+
+            var userCode = document.getElementById('userCode').value;
+            if (userCode === '' || userCode === undefined) {
+                alert('请输入验证码');
+                return false;
+            }
+
+            $.ajax({
+                url: '~/ashx/LoginHandler.ashx',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    userName: name,
+                    userPass: Password,
+                    userCode: userCode
+                },
+                success: function (data) {
+                    if (data == 'Yes') {
+                        window.location.href = 'index.html';
+                    }
+                    else {
+                        alert('登陆失败');
+                    }
+                }
+            })
+            return false;
+        }
+    </script>
+
+}
+

@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string xmmulu = ViewBag.xmmulu;
+    int xmid = ViewBag.jibenid;
+    string xmname = ViewBag.name;
+
+    //这两个变量的作用是，在编辑表时加载表过程中，作为判断依据
+    string xmgl_jbxx = ViewBag.xmgl_jbxx;
+    string xmgl_lxpj = ViewBag.xmgl_lxpj;
+    string xmgl_cccx = ViewBag.xmgl_cccx;
+}
+
+<div class="easyui-tabs" id="easytab" style="height:auto;width:100%" data-options="fit:true, border:false">
+    <div title="基本信息表" style="padding:10px;width:40%;" data-options="url:'/xiangmuguanli/chakan_jbxx?xmid=@xmid&xmgl_xmname=@xmname'"></div>
+
+
+    @*项目绩效表*@
+    <div title="项目绩效表" data-options="iconCls:'icon-reload',closable:false,url:'/xiangmuguanli/chakan_xmjx?xmid=@xmid&xmgl_cccx=@xmgl_cccx'" style="padding: 10px;"></div>
+
+
+    @*测算明细表*@
+    <div title="项目测算明细表" data-options="closable:false,url:'/xiangmuguanli/chakan_csmx?xmid=@xmid'" style="padding: 10px;"></div>
+
+
+    @*测算明细表*@
+    <div title="分年度预算表" data-options="closable:false,url:'/xiangmuguanli/chakan_ndys?xmid=@xmid'" style="padding: 10px;"></div>
+
+
+    @*立项评级表*@
+    <div title="立项评级表" align="center" data-options="closable:false,url:'/xiangmuguanli/chakan_lxpj?xmid=@xmid'" style="padding: 10px;"></div>
+
+
+    @*采购配置表*@
+    <div title="采购和配置计划表" data-options="closable:false,url:'/xiangmuguanli/chakan_cgpz?xmid=@xmid'" style="padding: 10px;"></div>
+
+
+    @*附件上传*@
+    <div title="附件上传" data-options="closable:false,url:'/xiangmuguanli/chakan_fjsc?xmid=@xmid'" style="padding: 10px;"></div>
+
+</div>
+
+@section footer{
+    <script src="~/homescript/xiangmuguanli/chakan.js">
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+

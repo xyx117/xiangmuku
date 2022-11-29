@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "BasicBarindex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string muluname = ViewBag.muluname;
+}
+<div style="padding:5px">
+    <label class="label-top">显示类别:</label>
+    <select id="cc" class="easyui-combobox" name="state" style="width:20%;height:26px;">
+        <option value="jine">柱形-金额</option>
+        <option value="shuliang">柱形-数量</option>
+        <option value="jine_pie">饼图-金额</option>
+        <option value="shuliang_pie">饼图-数量</option>
+    </select>
+</div>
+<iframe id="tubiao" src="/xiangmuguanli/BasicBar?leibie=jine&muluname=@muluname" style="width:100%;height:500px;border:0px;padding:5px"></iframe>
+
+@section footer{
+
+    <script type="text/javascript">
+        var url, muluname = '@muluname';
+
+    </script>
+    <script src="~/homescript/xiangmuguanli/BasicBarindex.js">
+
+    </script>
+
+}

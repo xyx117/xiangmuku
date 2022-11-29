@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "wanshanxinxi";
+    string xmmulu = ViewBag.xmmulu;
+    int xmid = ViewBag.jibenid;
+    string xmname = ViewBag.name;
+    //这两个变量的作用是，在编辑表时加载表过程中，作为判断依据
+    string xmgl_jbxx = ViewBag.xmgl_jbxx;
+    string xmgl_lxpj = ViewBag.xmgl_lxpj;
+    string xmgl_cccx = ViewBag.xmgl_cccx;    
+    string xmgl_ndys = ViewBag.xmgl_ndys;
+    bool xmgl_cgpz_null = ViewBag.xmgl_cgpz_null;
+}
+
+<div class="easyui-tabs" id="easytab" style="height:auto;width:100%" data-options="fit:true, border:false">
+    <div title="基本信息表" data-options="url:'/xiangmuguanli/wsxx_jbxx?xmid=@xmid&xmname=@xmname&xmgl_jbxx=@xmgl_jbxx'" style="padding:10px;">
+
+    </div>    
+
+    @*项目绩效表*@
+    <div title="项目绩效表" data-options="url:'/xiangmuguanli/wsxx_xmjx?xmid=@xmid&xmname=@xmname&xmgl_cccx=@xmgl_cccx'" style="padding: 10px;">
+
+    </div>
+
+
+    @*测算明细表*@
+    <div title="项目测算明细表" data-options="url:'/xiangmuguanli/wsxx_csmx?xmid=@xmid'" style="padding: 10px;">
+
+    </div>
+
+   @*分年度预算*@
+    <div title="分年度预算表" data-options="url:'/xiangmuguanli/wsxx_nianduyusuan?xmid=@xmid&xmname=@xmname&xmgl_ndys=@xmgl_ndys'" style="padding:10px;">
+
+    </div>
+
+    @*立项评级表*@
+    <div title="立项评级表" align="center" style="padding: 10px;" data-options="url:'/xiangmuguanli/wsxx_lxpj?xmid=@xmid&xmname=@xmname&xmgl_lxpj=@xmgl_lxpj'">
+
+    </div>
+
+
+    @*采购配置表*@
+    <div title="采购和配置计划表" data-options="url:'/xiangmuguanli/wsxx_cgpz?xmid=@xmid&xmgl_cgpz_null=@xmgl_cgpz_null'" style="padding: 10px;">
+
+    </div>
+
+
+    @*附件上传*@
+    <div title="附件上传" data-options="url:'/xiangmuguanli/wsxx_fjsc?xmid=@xmid&xmname=@xmname&xmmulu=@xmmulu'" style="padding: 10px;">
+
+    </div>
+
+</div>
+
+@section footer{
+
+    <script src="~/homescript/xiangmuguanli/wanshanxinxi.js"></script>
+}
+
+
+
+
+
+

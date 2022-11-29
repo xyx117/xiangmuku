@@ -1,0 +1,218 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string dgtitle = ViewBag.muluName;
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+    string username = User.Identity.GetUserName();
+    var sf = DateTime.Now.ToString();
+    DateTime jsshijian = ViewBag.jsshijian;
+    string weizhi = "位置：目录管理>>";
+}
+<div class="easyui-panel" title="@weizhi@dgtitle" style="padding:5px;" data-options="fit:true, border:true ">
+
+    <table id="dg_bsbmfzr" class="easyui-datagrid" style="width:100%;height:auto;">
+        <thead>
+            <tr>
+                <th data-options="field:'XmName',align:'center',width:'21%',formatter:TitleFormatter" rowspan="2">项目名称</th>
+                <th data-options="field:'Xuhao',align:'center',width:'4%'" rowspan="2">排名</th>
+                <th data-options="field:'zongjine',align:'center',width:'6%'" rowspan="2">金额<br />(万元)</th>
+                <th colspan="4">操作</th>
+                <th colspan="2">审核状态</th>
+                <th data-options="field:'Beizhu',align:'center',width:'20%',formatter: TitleFormatter_jj" rowspan="2">简介</th>
+                <th data-options="field:'Chuangjianshijian',align:'center',formatter: formatDatebox,width:'8%'" rowspan="2">创建时间</th>
+            </tr>
+            <tr>
+                <th data-options="field:'IDs',align:'center',width:'6%',formatter: rowformater_bmfzr">①</th>
+                <th data-options="field:'IDa',align:'center',width:'6%',formatter: bmfzr_shenhe">②</th>
+                <th data-options="field:'IDtijiao',align:'center',width:'6%',formatter: bmfzr_tijiao">③</th>
+                <th data-options="field:'action',align:'center',width:'7%',formatter: InputAction">④</th>
+                <th data-options="field:'bmfzrshenhe',align:'center',width:'7%',formatter:bmfzrtubiao">部门负责人</th>
+                <th data-options="field:'ywzyshenhe',align:'center',width:'7%',formatter:ywzybubiao">业务部门</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+<div id="mm3" class="easyui-menu" style="width:120px;">
+    <div id="rizhi">查看日志</div>
+    <div id="yidong">
+        移动目录
+    </div>
+    <div id="daochu">
+        导出excel
+    </div>
+</div>
+
+
+@*部门负责人不具有删除权限*@
+<div id="bmfzr_toolbar">
+    @if (DateTime.Now <= jsshijian)
+    {
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="newxm_yg()">新 增</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editxm_bmfzr()">编 辑</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="desxm_bmfzr()">删 除</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-paixu',plain:true" onclick="paixuXiangmu()">排序</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-huizongbiao',plain:true" onclick="nianduhuizong()">送审汇总表</a>
+    }
+</div>
+
+@*部门负责人审核弹出对话框*@
+<div id="shenhe_dlg" class="easyui-dialog" style="width:470px;height:240px;padding:10px 20px" data-options="closed:'true',buttons:'#shenhe_bmfzr_dlg'">
+    <center>
+        <form id="fm_shbmfzr" method="post" novalidate>
+            <table cellpadding="5">
+                <tr>
+                    <td><strong>审核结果:</strong></td>
+                    <td>
+                        <input type="radio" name="shenhe" value="通过" required><span>通过</span>
+                        <input type="radio" name="shenhe" value="未通过" required><span>未通过</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>审核意见：</strong></td>
+                    <td>
+                        <input name="bmfzryijian" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:70px">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</div>
+<div style="text-align:center;padding:5px" id="shenhe_bmfzr_dlg">
+    <a href="#" id="shenhe_btn" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="bmfzrshenhe_save()">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#shenhe_dlg').dialog('close')" style="width:80px">取消</a>
+</div>
+
+
+@*提交操作弹出对话框*@
+<div id="tj_bmfzr_dlg" class="easyui-dialog" style="width: 35%; height: auto; padding: 10px 20px" data-options="closed:'true',buttons:'#tj_bmfzr_btn'">
+    <div class="ftitle"></div>
+    <center>
+        <form id="tj_bmfzr_fm" method="post" novalidate>
+            <p style="font-size:15px;"><strong>您确定要提交这条记录吗？</strong></p>
+        </form>
+    </center>
+</div>
+<div id="tj_bmfzr_btn" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="tj_bmfzr_save()" style="width:90px">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#tj_bmfzr_dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+
+@*部门负责人新增编辑使用的对话框*@
+<div id="dlg" class="easyui-dialog" style="width: 65%; height:auto; padding: 10px 20px" data-options="closed:'true',buttons:'#dlg-btn'">
+    @*<div class="ftitle">项目管理设置</div>*@
+    <form id="fm" method="post" novalidate>
+        <div class="fitem" hidden>
+            <label>项目编号:</label>
+            <input name="ID" class="easyui-textbox">
+        </div>
+        <div class="fitem">
+            <label>项目名称:</label>
+            <input id="XmName" name="XmName" class="easyui-textbox" data-options="icons:[],validType:['checknameissame','stringCheckSub']" style="width:80%;height:30px;" required>
+        </div>
+        <div class="fitem">
+            <label>项目简介:</label>
+            <input name="Beizhu" id="Beizhu" class="easyui-textbox" data-options="multiline:true,icons:[]" style="width:80%;height:180px" required>
+        </div>
+    </form>
+</div>
+<div id="dlg-btn" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="saveXiangmu()" style="width:90px">保存</a>   @*这里新增和编辑公用一个save*@
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+
+@*部门负责人编辑使用的对话框    420px*@
+<div id="dlg_edit" class="easyui-dialog" style="width:65%;height:auto;padding:10px 20px" data-options="closed:'true',buttons:'#dlg-btn'">
+    <form id="fm_edit" method="post" novalidate>
+        <div class="fitem" hidden>
+            <label>项目编号:</label>
+            <input name="ID" class="easyui-textbox">
+        </div>
+
+        <div class="fitem">
+            <label>项目名称:</label>
+            <input id="XmName_edit" name="XmName" class="easyui-textbox" data-options="icons:[]" style="width:80%;height:30px;" required>
+        </div>
+
+        <div class="fitem">
+            <label>项目简介:</label>
+
+            <input name="Beizhu" id="Beizhu_edit" class="easyui-textbox" data-options="multiline:true,icons:[]" style="width:80%;height:180px" required>
+        </div>
+    </form>
+</div>
+<div id="dlg-btn" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="saveXiangmu_edit()" style="width:90px">保存</a>   @*这里新增和编辑公用一个save*@
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#dlg_edit').dialog('close')" style="width:90px">取消</a>
+</div>
+
+
+@*//排序对话框-----开始*@
+<div id="dlg_paixu" class="easyui-dialog" style="width:400px;height:500px;padding:10px 20px" data-options="closed:true,resizable:true,modal:true,buttons:'#dlg_paixu_buttons'">
+    <p style="padding-bottom:5px">注：请拖动项目进行排序，项目越在顶部，其优先级别越高（即优先级的值越小）</p>
+    <ul id="sortable" style="margin:0;padding:0;margin-left:10px;"></ul>
+    <div class="indicator">>></div>
+</div>
+<div id="dlg_paixu_buttons" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="paixuxiansh()" style="width:90px">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#dlg_paixu').dialog('close')" style="width:90px">取消</a>
+</div>
+@*//排序对话框-----结束*@
+
+
+@*部门负责人移动项目目录*@
+<div id="dlg_mulu" class="easyui-dialog" style="width:550px;height:auto;padding:10px 20px" data-options="closed:true,resizable:true,modal:true,buttons:'#dlg_mulu_btn'">
+    <form id="fm_mulu" method="post" novalidate>
+        <div class="fitem">
+            <label>移动到:</label>
+            <input id="ydmulu" name="ydmulu" class="easyui-combobox" style="width:70%;height:30px" required>
+        </div>
+    </form>
+</div>
+<div id="dlg_mulu_btn" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="mulu_save()" style="width:90px">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#dlg_mulu').dialog('close')" style="width:90px">取消</a>
+</div>
+
+
+@section footer{
+    <script type="text/javascript">
+        var url, dgtitle = '@dgtitle', loingid = '@loingid', username = '@username', sf = '@sf';
+    </script>
+    <script src="~/homescript/xiangmuguanli/bushen_bmfzr.js"></script>
+
+    <style type="text/css">
+        .fitem {
+            margin: 10px;
+        }
+
+            .fitem label {
+                display: inline-block;
+                width: 80px;
+            }
+
+        /*排序样式*/
+        .drag-item {
+            list-style-type: none;
+            display: block;
+            padding: 5px;
+            border: 1px solid #ccc;
+            margin: 2px;
+            width: 300px;
+            background: #fafafa;
+            color: #444;
+        }
+
+        .indicator {
+            position: absolute;
+            font-size: 9px;
+            width: 10px;
+            height: 10px;
+            display: none;
+            color: red;
+        }
+    </style>
+}

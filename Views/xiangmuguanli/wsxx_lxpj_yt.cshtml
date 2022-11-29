@@ -1,0 +1,413 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+    int xmid = ViewBag.xmid;
+    string xmname = ViewBag.xmname;
+    var sf = DateTime.Now.ToString();
+}
+<div>
+    <p>
+        <img src="~/Content/image/shuoming.png"><a href="~/Content/tianxieshuoming/lixiangpingji.htm" target="_blank" title="立项评级填写说明" style="text-decoration:underline">填写说明</a>
+    </p>
+</div>
+
+<form id="lxpj_fm" name="lxpj_fm" method="post">
+    @*这个method属性要放在data-option外面，放在里面不生效
+        <div hidden>  <input name="xiangmuguanliID" type="text" value="@xmid"/></div>*@
+    <table class="table table-bordered" style="width:100%;table-layout:fixed">
+        <tr id="lx_biaoti" style="text-align:center;font-weight:bold">
+            <td style="width: 130px;height:25px">评级内容</td>
+            <td> 关键评级问题</td>
+            <td>评级标准</td>
+            <td style="width: 40%;">说明及依据</td>
+            <td style="width: 80px;">自评得分</td>
+        </tr>
+        <tr>
+            @*<td rowspan="10"> 一、项目定位(35分)</td>*@
+            <td rowspan="8"> 一、项目定位(35分)</td>                 @*这里改为单元格占8列*@
+            <td rowspan="3"> 1.项目是否具有较强的相关性？(15分)</td>
+            <td>项目是否符合省委、省政府的发展规划、优先发展重点或部门的职能分工(5分)</td>
+            <td><input id="lx_man" name="one_1_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="one_1_1_f" name="one_1_1_f" style="width:60px">
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>项目是否列入本单位项目年度工作计划(5分)</td>
+            <td><input id="lx_man" name="one_1_2" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>     @*max: jQuery.format("请输入一个最大为 {0} 的值")*@
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="one_1_2_f" name="one_1_2_f" style="width:60px">
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>项目的产出是否能满足需求(5分)</td>
+            <td><input id="lx_man" name="one_1_3" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            @*<td><input id="lx_man" name="one_1_3_f" required class="easyui-validatebox" style="width:100%;height:100%" data-options="multiline:true,validType:'age_five'" onblur="lxpj_heji()"></input></td>*@
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="one_1_3_f" name="one_1_3_f" style="width:60px">
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td> 2．项目是否避免了影响项目效果或效率的重大缺陷？(7分)</td>       @*这里改为单元格只占一列*@
+            <td>是否存在技术上的瓶颈(7分)</td>
+            <td> <input id="lx_man" name="one_2_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="one_2_1_f" name="one_2_1_f" style="width:60px">
+                    <option value="7">7分</option>
+                    <option value="6">6分</option>
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">3．项目是否避免了与其他项目的重复？(7分)</td>
+            <td> 项目是否与已实施的项目重复(3分)</td>
+            <td> <input id="lx_man" name="one_3_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="one_3_1_f" name="one_3_1_f" style="width:60px">
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>项目是否与本部门或其他部门待实施的项目重复？(4分)</td>
+            <td><input id="lx_man" name="one_3_2" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="one_3_2_f" name="one_3_2_f" style="width:60px">
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2">4．项目支出能否有效用于项目目标和项目受益人？(6分)</td>
+            <td> 是否避免了在无关活动上的支出？(3分) </td>
+            <td> <input id="lx_man" name="one_4_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="one_4_1_f" name="one_4_1_f" style="width:60px">
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>项目受益人是否明确？(3分)</td>
+            <td><input id="lx_man" name="one_4_2" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="one_4_2_f" name="one_4_2_f" style="width:60px">
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="10">二、项目计划(40分)　 </td>
+            <td rowspan="2"> 5．项目的前期准备是否充分？(10分) </td>
+            <td> 项目是否有充分的前期调研和论证？(5分) </td>
+            <td><input id="lx_man" name="two_1_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_1_1_f" name="two_1_1_f" style="width:60px">
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td> 项目实施所需的物质、技术、制度条件是否具备？(5分) </td>
+            <td><input id="lx_man" name="two_1_2" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_1_2_f" name="two_1_2_f" style="width:60px">
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="3"> 6．项目是否有明确的实施计划？(13分)</td>
+            <td>项目的实施主体是否明确？(4分) </td>
+            <td><input id="lx_man" name="two_2_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_2_1_f" name="two_2_1_f" style="width:60px">
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>项目的实施时间是否明确？(4分)</td>
+            <td><input id="lx_man" name="two_2_2" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_2_2_f" name="two_2_2_f" style="width:60px">
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>各级管理者在项目成本控制、进度、结果上的责任是否明确？(5分)</td>
+            <td><input id="lx_man" name="two_2_3" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_2_3_f" name="two_2_3_f" style="width:60px">
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="3">7．项目的绩效指标体系是否完整？(12分) </td>
+            <td> 是否有充分反映项目目标的绩效指标？(4分) </td>
+            <td><input id="lx_man" name="two_3_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_3_1_f" name="two_3_1_f" style="width:60px">
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td> 绩效目标是否具体、量化？(5分) </td>
+            <td><input id="lx_man" name="two_3_2" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_3_2_f" name="two_3_2_f" style="width:60px">
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td> 项目的绩效目标是否具有挑战性？(3分) </td>
+            <td> <input id="lx_man" name="two_3_3" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_3_3_f" name="two_3_3_f" style="width:60px">
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="2"> 8．项目预算申请是否全面、规范？(5分) </td>
+            <td> 项目预算是否有漏项？(2分) </td>
+            <td><input id="lx_man" name="two_4_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_4_1_f" name="two_4_1_f" style="width:60px">
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td> 项目预算的测算是否有规范的支出标准依据？(3分) </td>
+            <td><input id="lx_man" name="two_4_2" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="two_4_2_f" name="two_4_2_f" style="width:60px">
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td rowspan="4"> 三、项目管理(10分) </td>
+            <td rowspan="2">9．部门项目管理水平是否得到一定程度的提高？(4分)</td>
+            <td> 前三年部门财政支出执行情况是否持续改进？(2分) </td>
+            <td><input id="lx_man" name="three_1_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="three_1_1_f" name="three_1_1_f" style="width:60px">
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td> 同类项目支出进度同比是否加快？(2分)</td>
+            <td><input id="lx_man" name="three_1_2" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="three_1_2_f" name="three_1_2_f" style="width:60px">
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td rowspan="2"> 10．部门是否运用项目绩效信息加强项目管理？(6分)</td>
+            <td> 是否按要求对上年度项目进行绩效自评？(3分)</td>
+            <td><input id="lx_man" name="three_2_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="three_2_1_f" name="three_2_1_f" style="width:60px">
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td> 是否运用评价结果改进了项目管理？(2分)</td>
+            <td><input id="lx_man" name="three_2_3" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="three_2_3_f" name="three_2_3_f" style="width:60px">
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td rowspan="2"> 四、项目结果(15分)</td>
+            <td rowspan="2">11．项目预期结果能否实现？(15分)</td>
+            <td> 能否按时完成项目？(7分)</td>
+            <td><input id="lx_man" name="four_1_1" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="four_1_1_f" name="four_1_1_f" style="width:60px">
+                    <option value="7">7分</option>
+                    <option value="6">6分</option>
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td> 能否实现承诺的绩效目标？(8分)</td>
+            <td><input id="lx_man" name="four_1_2" required class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></td>
+            <td>
+                <select class="easyui-combobox" data-options="editable:false" id="four_1_2_f" name="four_1_2_f" style="width:60px">
+                    <option value="8">8分</option>
+                    <option value="7">7分</option>
+                    <option value="6">6分</option>
+                    <option value="5">5分</option>
+                    <option value="4">4分</option>
+                    <option value="3">3分</option>
+                    <option value="2">2分</option>
+                    <option value="1">1分</option>
+                    <option value="0">0分</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr id="lx_mowei" style="text-align: center; height: 25px;">
+            <td colspan="4"> 项目总得分</td>
+            <td><input type="text" id="zongfen" name="zongfen" style="border-style:none;text-align:center;width:80px;" readonly></td>
+        </tr>
+
+        <tr id="lx_mowei" style="text-align: center; height: 25px;">
+            <td colspan="4">项目等级</td>
+            @*<td> <input id="xmdengjirrr" name="xmdengji" class="easyui-textbox" style="width:100%;height:100%" data-options="multiline:true"></input></td>*@
+            <td><input type="text" id="xmdengji" name="xmdengji" style="border-style:none;text-align:center;width:80px;" readonly></td>
+        </tr>
+    </table>
+</form>
+<table style="width:94%" border="0">
+    <tr>
+        <td>
+            <p style="text-align:left">
+                @*这里尝试过使用rowspand=2，但textalign不好控制*@
+                说明：
+
+            </p>
+        </td>
+        <td style="text-align:left">
+            <p>项目等级按照项目总得分进行默认，其标准如下：</p>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <p>1.优：项目总得分>=90；2.良：80<=项目总得分<=89；3.中：60<=项目总得分<=79；4.差：项目总得分<=60。</p>
+        </td>
+    </tr>
+</table>
+
+
+<div style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" id="lxpj_save" class="easyui-linkbutton" style="width:70px;height:40px;text-align:center" onclick="lxpj_smtFm()">更新</a>
+    <a href="javascript:void(0)" id="lxpj_rset" class="easyui-linkbutton" style="width:70px;height:40px;text-align:center" onclick="lxpj_clFm()">重置</a>
+</div>
+
+<script type="text/javascript">
+    var url, xmid = '@xmid', sf = '@sf', xmname = '@xmname';
+</script>
+
+<script src="~/homescript/xiangmuguanli/wsxx_lxpj_yt.js"></script>
+
+
+

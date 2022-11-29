@@ -1,0 +1,148 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+    int xmid = ViewBag.xmid;     
+    bool xmgl_cgpz = ViewBag.cgpz_null;
+}
+
+<div>
+    <div>
+        <p>
+            <img src="~/Content/image/shuoming.png"><a href="~/Content/tianxieshuoming/cgpz_intro.html" target="_blank" title="采购配置填写说明" style="text-decoration:underline">填写说明</a>
+            <font color="#ff0000">注：若无采购计划，请点击&nbsp;&nbsp;“非空表申报”&nbsp;&nbsp; 按钮</font>
+        </p>
+    </div>
+    <table id="cgpz_dg" class="easyui-datagrid" style="height:auto;width:100%">
+        <thead>
+            <tr>
+                <th data-options="field:'suoshuniandu',align:'center',width:'5%'">年度</th>
+                <th data-options="field:'zichanmingcheng',align:'center',width:'20%'">资产名称</th>
+                <th data-options="field:'guigexinghao',align:'left',halign:'center',width:'20%'">规格型号</th>
+                <th data-options="field:'peizhishuliang',align:'center',width:'10%'">配置数量</th>
+                <th data-options="field:'danjia',align:'center',width:'8%'">单价(元)</th>
+                <th data-options="field:'jine',align:'center',width:'8%',formatter:jine">金额(元)</th>
+                <th data-options="field:'zichancunliang',align:'center',width:'10%'">资产存量情况</th>
+                <th data-options="field:'caigoushuoming',align:'left',halign:'center',width:'17%'">采购说明和配置资产申请理由</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="cgpzjine_hj" style="text-align:center;margin-top:20px;font-size:medium;">
+    </div>
+    <div id="cgpz_toolbar">       
+        @if (xmgl_cgpz)
+        {
+            <a href="#" class="easyui-linkbutton" id="cgpz_add" data-options="iconCls:'icon-add',plain:true,disabled:true" onclick="cgpz_new()">新 增</a>
+            <a href="#" class="easyui-linkbutton" id="cgpz_edit" data-options="iconCls:'icon-edit',plain:true,disabled:true" onclick="cgpz_edit()">编 辑</a>
+            <a href="#" class="easyui-linkbutton" id="cgpz_del" data-options="iconCls:'icon-remove',plain:true,disabled:true" onclick="cgpz_destroy()">删 除</a>
+            <a href="#" class="easyui-linkbutton" id="cgpz_exl" data-options="iconCls:'icon-add',plain:true,disabled:true" onclick="cgpz_exl_new()">电子表格导入</a>
+            <input id="caigoujihua" name="caigoujihua" style="width:100px" class="easyui-switchbutton" checked>
+        }
+        else
+        {
+            <a href="#" class="easyui-linkbutton" id="cgpz_add" data-options="iconCls:'icon-add',plain:true" onclick="cgpz_new()">新 增</a>
+            <a href="#" class="easyui-linkbutton" id="cgpz_edit" data-options="iconCls:'icon-edit',plain:true" onclick="cgpz_edit()">编 辑</a>
+            <a href="#" class="easyui-linkbutton" id="cgpz_del" data-options="iconCls:'icon-remove',plain:true" onclick="cgpz_destroy()">删 除</a>
+            <a href="#" class="easyui-linkbutton" id="cgpz_exl" data-options="iconCls:'icon-add',plain:true" onclick="cgpz_exl_new()">电子表格导入</a>
+            <input id="caigoujihua" name="caigoujihua" style="width:100px" class="easyui-switchbutton">
+        }             
+    </div>
+    <div id="cgpz_dlg" class="easyui-dialog" style="width:60%;height:auto;padding:10px 20px" data-options="closed:'true',buttons:'#cgpz_dlg-buttons'">
+        <form id="cgpz_fm" method="post" novalidate>           
+            <div class="fitem">
+                <label>年度:</label>               
+                <input class="easyui-combobox" id="suoshuniandu" name="suoshuniandu" style="width: 80%; height: 30px;">
+            </div>
+
+            <div class="fitem">
+                <label>资产名称:</label>
+                <input name="zichanmingcheng" id="zichanmingcheng" data-options="icons:[]" class="easyui-textbox" style="width: 80%; height: 30px;" required>
+            </div>
+
+            <div class="fitem">
+                <label>规格型号:</label>
+                <input id="guigexinghao" name="guigexinghao" data-options="multiline:true,icons:[]" class="easyui-textbox" style="width: 80%; height: 60px;">
+            </div>
+
+            <div class="fitem">
+                <label>配置数量:</label>
+                <input id="peizhishuliang" name="peizhishuliang" class="easyui-textbox" data-options="validType:'numeric',icons:[]" style="width:80%; height: 30px;" required>
+            </div>
+
+            <div class="fitem">
+                <label>单价(元):</label>
+                <input name="danjia" id="danjia" class="easyui-textbox" style="width:80%; height: 30px;" data-options="validType:'numeric',icons:[]" required>
+            </div>
+
+            <div class="fitem">
+                <label>资产存量:</label>
+                <input name="zichancunliang" id="zichancunliang" class="easyui-textbox" data-options="icons:[]" style="width:80%; height: 30px;">
+            </div>
+
+            <div class="fitem">
+                <label>资产申请理由:</label>
+                <input name="caigoushuoming" id="caigoushuoming" class="easyui-textbox" style="width:80%; height:90px;" data-options="multiline:true,icons:[]">
+            </div>
+        </form>
+    </div>
+    @*新增表单保存按钮*@
+    <div id="cgpz_dlg-buttons" style="text-align:center;padding:5px">
+        <a href="javascript:void(0)" id="ju" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="cgpz_save()" style="width:90px;">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript:$('#cgpz_dlg').dialog('close')" style="width:90px;">取消</a>
+    </div>
+    
+    <div id="cgpz_dlgexl" class="easyui-dialog" style="width:450px;height:380px;padding:10px 20px" data-options="closed:'true',buttons:'#cgpz_exl_btn'">
+        <div class="ftitle">项目采购配置电子表格导入</div>
+        <form id="cgpz_fmexl" method="post" novalidate style="height:200px" enctype="multipart/form-data">            @*enctype="multipart/form-data"  这个属性不能缺少，否则找不到文件*@
+            <div class="fitem">
+                <p style="color: Red; text-align: center;">
+                    @Html.ActionLink("下载模版", "GetexcelFile", new { mobanname = "cgpz" })
+                </p>
+            </div>
+            <div class="fitem">
+                <label>选择文件：</label>
+                <input id="files" name="files" style="width:60%;height:30px">
+            </div>
+            <div class="fitem">
+                <label>更新模式：</label>
+                <select id="gengxinmoshi" name="gengxinmoshi" class="easyui-combobox" style="width:150px;height:30px">
+                    <option value="zhuijia" selected>追加</option>
+                    <option value="fugai">覆盖</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div id="cgpz_exl_btn" style="text-align:center;padding:5px">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="cgpz_saveexl()" style="width:90px;">导入</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript:$('#cgpz_dlgexl').dialog('close')" style="width:90px;">取消</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var xmid = '@xmid';
+</script>
+
+<script src="~/homescript/xiangmuguanli/wsxx_cgpz.js"></script>
+
+<style type="text/css">  
+    .ftitle {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 0;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+    .fitem {
+        margin-bottom: 10px;
+    }
+        .fitem label {
+            display: inline-block;
+            width: 100px;
+        }
+        .fitem input {
+            width: 260px;
+            height: 30px;
+        }
+    .easyui-validatebox {
+        text-align: center;
+        padding-top: 10%;
+    }
+</style>

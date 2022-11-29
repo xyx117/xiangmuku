@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    string userid = User.Identity.GetUserId();//取到登录人员的id
+    //string xmid = "1";
+    //string xmname = "1";
+}
+
+<div class="easyui-tabs" id="easytab" style="height:auto;width:100%" data-options="fit:true, border:false">
+    <div title="一级部门用户" style="padding:10px;width:40%;" data-options="url:'/Account/A_class_dep_users'"></div>
+    
+    <div title="二级部门用户" data-options="iconCls:'icon-reload',closable:false,url:'/Account/B_class_dep_users'" style="padding: 10px;"></div>   
+
+</div>
+
+@section footer{
+    <script src="~/homescript/xiangmuguanli/chakan.js">
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+﻿@model xmkgl.Models.News
+
+@{
+    ViewBag.Title = "Detailnew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="easyui-panel" title="位置：公告>>查看公告" style="padding:5px;" data-options="fit:true, border:true ">
+    <div style="text-align:right">
+        <button type="button" class="btn btn-primary" onclick="window.location.href = '@Url.Action("Indexnew", "Home")'">返回</button>
+    </div>
+
+    <div style="font-size:20px;text-align:center;font-weight:bold">
+        @Html.DisplayFor(model => model.title)
+    </div>
+    <hr />
+    <div style="margin-top:30px;margin-left:20px">
+        @{
+            var cont = Model.Content;
+        }
+        @Html.Raw(cont)
+    </div>
+    <hr />
+    <div style="text-align:left;font-size:14px;margin-top:30px">
+        <p>
+            @Html.DisplayNameFor(model => model.author)  @Html.DisplayFor(model => model.author)
+            <br />
+            @Html.DisplayNameFor(model => model.publishtime)  @Html.DisplayFor(model => model.publishtime)
+        </p>
+    </div>  
+    <div style="text-align:right">        
+        <button type="button" class="btn btn-primary" onclick="window.location.href = '@Url.Action("Indexnew", "Home")'">返回</button>
+    </div>
+</div>

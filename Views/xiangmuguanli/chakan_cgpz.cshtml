@@ -1,0 +1,71 @@
+﻿@model IEnumerable<xmkgl.Models.xmcgpz>
+@{
+    ViewBag.Title = "chakan_cgpz";
+}
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th nowrap>
+                @Html.Label("序号", htmlAttributes: new { @class = "control-label col-md-1" })@*, htmlAttributes: new { @class = "control-label col-md-2" }*@
+            </th>
+            <th nowrap>
+                @Html.Label("年度", htmlAttributes: new { @class = "control-label col-md-1" })                
+            </th>
+            <th nowrap>
+                @Html.Label("资产名称", htmlAttributes: new { @class = "control-label col-md-2" })           
+            </th>
+            <th nowrap>
+                @Html.Label("规格型号", htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th nowrap>
+                @Html.Label("配置数量", htmlAttributes: new { @class = "control-label col-md-1" })
+            </th>
+            <th nowrap>
+                @Html.Label("单价（元）", htmlAttributes: new { @class = "control-label col-md-1" })
+            </th>
+            <th nowrap>
+                @Html.Label("资产存量情况", htmlAttributes: new { @class = "control-label col-md-1" })
+            </th>
+            <th nowrap>
+                @Html.Label("采购说明和配置资产申请理由", htmlAttributes: new { @class = "control-label col-md-3" })
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int hao = 1; decimal jine_hj = 0;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @hao
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.suoshuniandu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.zichanmingcheng)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.guigexinghao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.peizhishuliang).ToString().Replace(".00", "")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.danjia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.zichancunliang)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.caigoushuoming)
+                </td>
+            </tr>
+            hao = hao + 1;
+            jine_hj = jine_hj + item.peizhishuliang * item.danjia;
+        }
+       
+    </tbody>
+</table>
+<div style="text-align:center;margin-top:20px;font-size:medium;">采购金额合计：@jine_hj (元)</div>

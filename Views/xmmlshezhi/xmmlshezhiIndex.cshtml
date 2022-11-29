@@ -1,0 +1,92 @@
+﻿<table id="dg" class="easyui-datagrid" title="位置：基本设置>>目录设置" style="height:auto;width:100%">
+    <thead>
+        <tr>         
+            <th data-options="field:'Name',align:'center',width:'30%',formatter:TitleFormatter">目录名称</th>
+            <th data-options="field:'fgxzshenhefou',align:'center',width:'12%'">分管领导审核否</th>
+            <th data-options="field:'Kaishishijian',align:'center',formatter:formatDatebox,width:'9%'">开始时间</th>
+            <th data-options="field:'Jieshushijian',align:'center',formatter:formatDatebox,width:'9%'">结束时间</th>
+            <th data-options="field:'chuangjian_time',align:'center',formatter:formatDatebox,width:'9%'">创建时间</th>
+            <th data-options="field:'Beizhu',align:'left',halign:'center',width:'29%',formatter:TitleFormatter">备注</th>   @*halign是标头的对齐方式，align是内容的对齐方式*@
+        </tr>
+    </thead>
+</table>
+
+<div id="toolbar">  
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="newMulu()">新 增</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editMulu()">编 辑</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="destroyMulu()">删 除</a>
+</div>
+<div id="dlg" class="easyui-dialog" style="width:650px;height:430px;padding:10px 10px" data-options="closed:true,buttons:'#dlg-buttons'">
+    <div class="ftitle"></div>
+    <form id="fm" method="post" novalidate>
+        <div class="fitem" hidden>
+            <label>目录编号:</label>
+            <input name="ID" class="easyui-textbox" style="width: 300px; height: 30px; ">
+        </div>
+
+        <div class="fitem" hidden>
+            <label>创建时间:</label>
+            <input name="chuangjian_time" class="easyui-textbox" style="width: 300px; height: 30px; ">
+        </div>
+        <div class="fitem">
+            <label>目录名称:</label>
+            <input id="xmName" name="Name" class="easyui-textbox" data-options="icons:[],validType:['checknameissame','stringCheckSub']" style="width: 400px; height: 30px" required>
+        </div>
+        <div class="fitem">
+            <label>分管校长审核否:</label>
+         
+            <input id="fgxzshenhefou" name="fgxzshenhefou" class="easyui-switchbutton" data-options="onText:'审核',offText:'不审'">
+        </div>
+        <div class="fitem">
+            <label>开始日期:</label>
+            <input id="startdate" name="Kaishishijian" class="easyui-datebox" style="width: 400px; height: 30px; " data-options="editable:false" required>
+       
+        </div>
+        <div class="fitem">
+            <label>结束日期:</label>
+            <input id="enddate" name="Jieshushijian" class="easyui-datebox" style="width: 400px; height: 30px; " required data-options="editable:false,validType:'md[\'startdate\']'">
+        </div>
+        <div class="fitem">
+            <label>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:</label>
+            <input name="Beizhu" id="Beizhu" class="easyui-textbox" data-options="multiline:true,icons:[]" style="width: 400px; height: 90px; ">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="saveMulu()" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+@section footer{
+    <script type="text/javascript">
+        var url;
+    </script>
+    <script src="~/homescript/mulusheshi/mulushezhiindex.js"></script>
+    <style type="text/css">
+        #fm {
+            margin: 0;
+            padding: 10px 30px;
+        }
+
+        .ftitle {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .fitem {
+            margin-bottom: 15px;
+        }
+
+            .fitem label {
+                display: inline-block;
+                width: 120px;
+            }
+
+            .fitem input {
+                width: 160px;
+            }
+    </style>
+}

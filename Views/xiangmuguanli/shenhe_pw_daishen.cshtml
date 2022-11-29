@@ -1,0 +1,142 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string dgtitle = ViewBag.muluName;
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+    string username = User.Identity.GetUserName();
+}
+<table id="dg_shpw_wsh" class="easyui-datagrid" style="width:100%;height:auto;">
+    <thead>
+        <tr>
+            <th data-options="field:'ck',checkbox:true" rowspan="2"></th>
+            <th data-options="field:'XmName',align:'center',width:'21%',formatter:TitleFormatter" rowspan="2">项目名称</th>
+            <th data-options="field:'Xuhao',align:'center',width:'4%'" rowspan="2">排名</th>
+            <th data-options="field:'zongjine',align:'center',width:'5%'" rowspan="2">金额<br />(万元)</th>
+            <th colspan="4">操作</th>
+            <th colspan="3">审核状态</th>
+            <th data-options="field:'Beizhu',align:'center',width:'20%',formatter: TitleFormatter_jj" rowspan="2">简介</th>
+            <th data-options="field:'Chuangjianshijian',align:'center',formatter:formatDatebox,width:'8%'" rowspan="2">创建时间</th>
+        </tr>
+        <tr>           
+            <th data-options="field:'IDs',align:'center',width:'5%',formatter: tianbiao_pw_wsh">①</th>
+            <th data-options="field:'IDas',align:'center',width:'5%',formatter:pw_shenhe_wsh">②</th>
+            <th data-options="field:'pwchehui',align:'center',width:'5%',formatter: pwchehui">③</th>
+            <th data-options="field:'xmrizhi',align:'center',width:'5%',formatter: pwxmrizhi_wsh">④</th>
+            <th data-options="field:'bmfzrshenhe',align:'center',width:'7%',formatter:bmfzrtubiao">部门负责人</th>
+            <th data-options="field:'fgldshenhe',align:'center',width:'7%',formatter:fgldtubiao">分管领导</th>
+            <th data-options="field:'pingweishenhe',align:'center',width:'4%',formatter:pwshenhebubiao">评委</th>
+        </tr>
+    </thead>
+</table>
+
+@*批量审核按钮*@
+<div id="pl_ywzy_toolbar" style="height: 32px; padding: 2px 5px; background:#ddd;">    
+    <div style="float: left;">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-shenhe',plain:true" onclick="pl_shenhe()">批量审核</a>
+    </div>
+
+    <div style="float: right">
+        评审部门筛选:
+        <select id="suoshuxueyuan" name="suoshuxueyuan" class="easyui-combobox" style="width:200px" data-options="editable:false">
+            @foreach (var item in ViewBag.fgld_sx_bumen)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+    </div>
+</div>
+
+@*评委单个审核弹出对话框*@
+<div id="pwshenhe_dlg" class="easyui-dialog" style="width:470px;height:240px;padding:10px 20px" data-options="closed:'true',buttons:'#shenhe_pw_dlg'">
+    <center>
+        <form id="fm_shpw" method="post" novalidate>
+            <table cellpadding="5">
+                <tr>
+                    <td><strong>审核结果:</strong></td>
+                    <td>
+                        <input type="radio" name="shenhe" value="通过" required><span>通过</span>
+                        <input type="radio" name="shenhe" value="未通过" required><span>未通过</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>审核意见：</strong></td>
+                    <td>
+                        <input name="pwyijian" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:70px">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</div>
+<div style="text-align:center;padding:5px" id="shenhe_pw_dlg">
+    <a href="#" id="shenhe_btn" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="pwshenhe_save()">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#pwshenhe_dlg').dialog('close')" style="width:80px">取消</a>
+</div>
+
+
+@*评委撤回*@
+<div id="pw_chehui_dlg" class="easyui-dialog" style="width:470px;height:220px;padding:10px 20px" data-options="closed:'true',buttons:'#shenhe_ywzy_dlg'">
+    <center>
+        <form id="fm_pw_chehui" method="post" novalidate>
+            <p style="font-size:15px;"><strong>您确定要撤回这条记录吗？</strong></p>
+            <table cellpadding="5">
+                <tr>
+                    <td><strong>撤回意见：</strong></td>
+                    <td>
+                        <input name="pingweiyijian" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:70px">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</div>
+<div style="text-align:center;padding:5px" id="shenhe_ywzy_dlg">
+    <a href="#" id="shenhe_btn" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="pwchehui_save()">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#pw_chehui_dlg').dialog('close')" style="width:80px">取消</a>
+</div>
+
+@*批量审核弹出对话框*@
+<div id="shpwpl_shenhe_dlg" class="easyui-dialog" style="width:450px;height:240px;padding:10px 20px" data-options="closed:'true',buttons:'#shpwpl_shenhe_btn'">
+    <div class="ftitle"></div>
+    <center>
+        <form id="shenhe_fm_pwpl" method="post" novalidate>
+            <table cellpadding="5">
+                <tr>
+                    <td><strong>审核结果:</strong></td>
+                    <td>
+                        <input type="radio" name="shenhe" value="通过" required><span>通过</span>
+                        <input type="radio" name="shenhe" value="未通过" required><span>未通过</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>审核意见：</strong></td>
+                    <td>
+                        <input name="pwyijian" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:70px">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div id="shpwpl_shenhe_btn" style="text-align:center;padding:5px">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="pl_pwsh_save()" style="width:90px">确定</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#shpwpl_shenhe_dlg').dialog('close')" style="width:90px">取消</a>
+        </div>
+    </center>
+</div>
+
+<script type="text/javascript" src="~/Scripts/myScript/datagrid-groupview.js"></script>
+
+<script type="text/javascript">
+    var url, dgtitle = '@dgtitle', loingid = '@loingid', username = '@username';
+</script>
+
+<script src="~/homescript/xiangmuguanli/shenhe_pw_daishen.js"></script>
+
+<style type="text/css">    
+    .ftitle {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 0;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+</style>

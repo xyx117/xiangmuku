@@ -1,0 +1,82 @@
+﻿@model PagedList.IPagedList<xmkgl.Models.denglurizhi>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "loginindex";
+}
+<div id="p" class="easyui-panel" title="位置：基本设置>>登录日志" style="width:auto;height:auto;padding:10px;">
+    @using (Html.BeginForm("loginindex", "login", FormMethod.Get))
+    {
+        <table class="table table-striped table-hover form-group">
+            <tr>
+                <td class="col-md-3"></td>
+                <td nowrap class="col-md-4">
+                    @if (ViewBag.currentfilter == null)
+                    {
+                        @Html.TextBox("searchstring", "", new { placeholder = "可输入用户名或IP地址关键字进行查询", style = "width:450px", @class = "form-control" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("searchstring", "", new { placeholder = ViewBag.currentfilter, style = "width:450px", @class = "form-control" })
+                    }
+                </td>
+
+                <td nowrap class="col-md-1">
+                    <button type="submit" class="btn btn-primary"><span style="font-size:small">搜索 »</span></button>
+                </td>
+                <td class="col-md-4"></td>
+            </tr>
+        </table>
+    }
+
+    <table class="table table-striped table-hover " style="margin-top:20px">
+        <tr>
+            <th nowrap>
+                @Html.Label("序号", htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th nowrap>
+                @Html.Label("用户名", htmlAttributes: new { @class = "control-label col-md-3" })
+
+            </th>
+            <th nowrap>
+                @Html.Label("IP地址", htmlAttributes: new { @class = "control-label col-md-4" })
+            </th>
+            <th nowrap>
+                @Html.Label("登录时间", htmlAttributes: new { @class = "control-label col-md-3" })
+            </th>
+        </tr>
+
+        @{ int hao = 1;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @hao
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.loginIP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.login_time)
+                </td>
+            </tr>
+            hao = hao + 1;
+        }
+    </table>
+    
+    <div class="row clearfix " style="width:100%">
+        <div class="col-md-2 column">
+        </div>
+        <div class="col-md-6 column  nowrap" style="text-align:right; ">
+            @Html.PagedListPager(Model, Page => Url.Action("loginindex", new { Page, currentfilter = ViewBag.currentfilter }))
+        </div>
+        <div class="col-md-2 column modal-body" style="text-align: left; ">
+            第 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) 页/共 @Model.PageCount 页
+        </div>
+        <div class="col-md-2 column">
+        </div>
+    </div>
+</div>
+

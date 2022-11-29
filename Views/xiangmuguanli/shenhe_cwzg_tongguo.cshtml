@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "shenhe_cwzg_tongguo";
+    string dgtitle = ViewBag.muluName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+}
+
+<table id="dg_cwzg" class="easyui-datagrid" style="height:auto;width:100%">
+    <thead>
+        <tr>
+            <th data-options="field:'XmName',align:'center',width:'23%',formatter:TitleFormatter" rowspan="2">项目名称</th>
+            <th data-options="field:'Xuhao',align:'center',width:'5%'" rowspan="2">序号</th>
+            <th data-options="field:'zongjine',align:'center',width:'5%'" rowspan="2">金额<br />(万元)</th>
+            <th colspan="2">操作</th>
+            <th colspan="4">审核状态</th>
+            <th data-options="field:'Beizhu',align:'center',width:'19%',formatter: TitleFormatter_jj" rowspan="2">简介</th>
+            <th data-options="field:'Chuangjianshijian',align:'center',formatter:formatDatebox,width:'8%'" rowspan="2">创建时间</th>
+        </tr>
+        <tr>
+            <th data-options="field:'xmrizhi',align:'center',width:'6%',formatter: ygxmrizhi">①</th>
+            <th data-options="field:'xmzhongcai',align:'center',width:'6%',formatter:cwzg_zhongcai">②</th>
+            <th data-options="field:'bmfzrshenhe',align:'center',width:'7%',formatter:bmfzrtubiao" >部门负责人</th>
+            <th data-options="field:'fgldshenhe',align:'center',width:'7%',formatter:fgldtubiao">分管领导</th>
+            <th data-options="field:'pingweishenhe',align:'center',width:'6%',formatter:pwshenhetubiao">评委</th>
+            <th data-options="field:'ywzyshenhe',align:'center',width:'7%',formatter:ywzybubiao">业务部门</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="cwzg_toolbar" style="height: 32px; padding: 2px 5px; background:#ddd;">
+    <div style="float: left;">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tubiao',plain:true" onclick="tb_cwzg()">图表</a>
+    </div>
+    <div style="float: right">
+        所有部门筛选:
+        <select id="suoshuxueyuan" name="suoshuxueyuan" class="easyui-combobox" style="width:200px" data-options="editable:false">
+            @foreach (var item in ViewBag.fgld_sx_bumen)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+    </div>
+</div>
+
+@*仲裁弹出对话框*@
+<div id="cwzg_zc_dlg" class="easyui-dialog" style="width:470px;height:240px;padding:10px 20px" data-options="closed:'true',buttons:'#cwzg_zc_btn'">
+    <div class="ftitle"></div>
+    <center>
+        <form id="cwzg_zc_fm" method="post" novalidate>            
+              <p style="font-size:15px;padding-bottom:15px"><strong>您确定交由业务专员重新审核这条记录吗？</strong></p>              
+            <table>                
+                <tr>
+                    <td><strong>重审意见：</strong></td>
+                    <td>
+                        <input name="cwzgyijian" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:70px">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</div>
+<div id="cwzg_zc_btn" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="cwzg_zc_save()" style="width:90px">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#cwzg_zc_dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<script type="text/javascript" src="~/Scripts/myScript/datagrid-groupview.js"></script>
+
+<script type="text/javascript">    
+    var url, dgtitle = '@dgtitle', loingid = '@loingid';
+</script>
+
+<script src="~/homescript/xiangmuguanli/shenhe_cwzg_tongguo.js"></script>
+
+
+
+

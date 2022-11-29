@@ -1,0 +1,28 @@
+﻿@model IEnumerable<xmkgl.Models.fgbmViewModel>
+<div id="p" class="easyui-panel" title="位置：基本设置>>分管部门" style="padding:10px;" data-options="fit:true">
+    <table class="table table-striped table-hover table-condensed" style="width:90%;margin:10px auto;text-align:center">
+        <tr style="font-size:14px;font-weight:bold;background-color:#dcdada">
+            <td>
+                序号
+            </td>
+            <td>
+                部门名称
+            </td>
+        </tr>
+        @{ int hao = 1; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @hao
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bm)
+                </td>
+            </tr>
+            hao = hao + 1;
+        }
+        <tr><td></td><td></td></tr>
+    </table>
+</div>
+

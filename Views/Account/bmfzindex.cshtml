@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<xmkgl.Models.RegisterViewModel>
+@{
+    ViewBag.Title = "Index";
+    string userid = User.Identity.GetUserId();//取到登录人员的id
+}
+
+<table id="bmfzr_dg" class="easyui-datagrid" title="位置：基本设置>>用户管理" style="height:auto;">
+    <thead>
+        <tr>
+
+            <th data-options="field:'ck',checkbox:true" ></th>   @*测试批量初始化密码*@
+
+            <th data-options="field:'UserName',align:'center',width:'21%'">用户名</th>
+            <th data-options="field:'zhenshiname',align:'center',width:'25%'">真实姓名</th>
+
+            <th data-options="field:'suoshuxueyuan',align:'center',width:'30%',formatter:TitleFormatter">所辖部门</th>
+
+            <th data-options="field:'PhoneNumber',align:'center',width:'20%'">联系电话</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="bmfzr_toolbar">
+    @*<a href="#" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="newUser()">新 增</a>*@
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="newUser()">新 增</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editUser()">编 辑</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editpassword()">重置密码</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="destroyUser()">删 除</a>
+</div>
+
+<div id="bmfzr_dlg" class="easyui-dialog" style="width:540px;height:400px;padding:10px 20px" data-options="closed:'true',buttons:'#bmfzr_buttons'">
+    <div class="ftitle">用户设置</div>
+
+    <form id="bmfzr_fm" method="post" style="padding-left:10px" novalidate>
+        <div class="fitem">
+            <label>用户名:</label>
+            <input name="UserName" id="name" class="easyui-textbox" data-options="icons:[],validType:'checknameissame'" style="width:320px;height:30px" required>
+        </div>
+        <div class="fitem">
+            <label>真实姓名:</label>
+            <input name="zhenshiname" id="zhenshiname" class="easyui-textbox" data-options="icons:[]" style="width:320px;height:30px" required>
+        </div>
+        <div class="fitem">
+            <label>联系电话:</label>
+            <input name="PhoneNumber" id="phonenumber" class="easyui-textbox" data-options="prompt:'0898-65884963或13198934567',validType:'phoneRex'" style="width:320px;height:30px" required>
+        </div>
+        <div class="fitem" id="pw">
+            <label>密码:</label>
+            <input id="userpassword" name="password" type="password" class="easyui-textbox" data-options="icons:[],validType:'minLength[6]'" style="padding-left: 5px; width: 320px; height: 30px">
+        </div>
+        <div class="fitem" id="imf">
+            <label></label>
+            （若输入为空则默认为初始密码）
+        </div>
+        <div class="fitem" id="pw_cf">
+            <label>确认密码:</label>
+            <input name="confirmPassword" id="confirmPassword" type="password" class="easyui-textbox" style="padding-left: 5px; width: 320px; height: 30px" data-options="icons:[],validType:'equalTo[\'#userpassword\']'">
+        </div>
+    </form>
+</div>
+
+<div id="bmfzr_buttons" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="saveUser()" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#bmfzr_dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<div id="bmrestpaw_dlg" class="easyui-dialog" style="width:300px;height:200px;padding:10px 20px" data-options="closed:'true',buttons:'#bmrestpaw_buttons'">
+    <div class="ftitle">用户设置</div>
+    <center>
+        <form id="bmrestpaw_fm" method="post" novalidate>
+            <strong>您确定要重置为默认密码吗？</strong>
+        </form>
+    </center>
+</div>
+<div id="bmrestpaw_buttons" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="restpwd()" style="width:90px">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#bmrestpaw_dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+
+@section footer{
+    <script type="text/javascript">
+        var url,userid='@userid';
+    </script>
+
+    @*<script src="~/homescript/account/bmfzrindex.js"></script>*@
+    <script src="~/homescript_old/account/bmfzrindex_old.js" type="text/javascript"></script>     @*批量更改密码 测试脚本*@
+
+    <style type="text/css">
+        #fm {
+            margin: 0;
+            padding: 10px 30px;
+        }
+
+        .ftitle {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .fitem {
+            margin: 10px;
+        }
+
+            .fitem label {
+                display: inline-block;
+                width: 80px;
+            }
+
+            .fitem input {
+                width: 160px;
+            }
+    </style>
+}
+
+
+

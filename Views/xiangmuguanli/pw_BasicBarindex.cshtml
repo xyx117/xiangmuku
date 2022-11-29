@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "BasicBarindex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string muluname = ViewBag.muluname;
+
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+}
+<div>
+    <label class="label-top">显示类别:</label>
+    <select id="cc" class="easyui-combobox" name="state" style="width: 20%; height: 26px; padding: 5px 5px 5px 5px">
+        <option value="tongguo">柱形-审核通过</option>
+        <option value="weitonggguo">柱形-审核不通过</option>
+        <option value="tongguo_pie">饼图-审核通过</option>
+        <option value="weitongguo_pie">饼图-审核不通过</option>
+    </select>
+</div>
+
+<iframe id="pw_tubiao" src="/xiangmuguanli/pw_BasicBar?leibie=tongguo&loing=@loingid" style="width: 100%; height: 500px; border: 0px; padding: 5px 5px 5px 5px"></iframe>
+
+@section footer{
+    <script type="text/javascript">
+        var url, muluname = '@muluname', loingid = '@loingid'
+    </script>
+    <script src="~/homescript/xiangmuguanli/pw_BasicBarindex.js">
+
+    </script>
+}
+
+
+
+
+
+

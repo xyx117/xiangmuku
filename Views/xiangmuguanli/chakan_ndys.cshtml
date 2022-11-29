@@ -1,0 +1,44 @@
+﻿@model xmkgl.Models.xmnianduyusuan
+@{
+    int cj_year = ViewBag.qishi_year;
+}
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th nowrap>
+                @Html.Label("项目名称")
+            </th>
+            <th nowrap>
+                第一年[@(cj_year + 1)]<br>申报数（千元）
+            </th>
+            <th nowrap>
+                第二年[@(cj_year + 2)]<br>申报数（千元）
+            </th>
+            <th nowrap>
+                第三年[@(cj_year + 3)]<br>申报数（千元）
+            </th>
+            <th nowrap>
+                @Html.Label("预算说明")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @( Model.Xiangmumingcheng)
+            </td>
+            <td>
+                @( Model.diyinian)
+            </td>
+            <td>
+                @( Model.diernian)
+            </td>
+            <td>
+                @( Model.disannian)
+            </td>
+            <td>
+                @( Model.yusuanshuoming)
+            </td>
+        </tr>
+    </tbody>
+</table>

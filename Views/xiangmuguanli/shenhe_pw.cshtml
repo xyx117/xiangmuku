@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    string dgtitle = ViewBag.muluName;
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+    string weizhi = "位置：目录管理>>";
+    var sf = DateTime.Now.ToString();
+}
+
+<div id="p" class="easyui-panel" title="@weizhi@dgtitle" style="padding:5px;" data-options="fit:true, border:true ">
+    <div class="easyui-tabs" id="easytab" data-options="fit:true, border:true ">
+        <div title="待审核项目" data-options="url:'/xiangmuguanli/shenhe_pw_daishen?muluName=@dgtitle&time=@sf&loingid=@loingid'" style="padding:5px;">
+        </div>
+
+        @*审核未通过*@
+        <div title="已审核项目" data-options="closable:false,url:'/xiangmuguanli/shenhe_pw_yishen?muluName=@dgtitle&time=@sf&loingid=@loingid'" style="padding: 5px;">
+        </div>
+    </div>
+</div>
+@section footer{
+    <script src="~/homescript/xiangmuguanli/shenhe_pw.js"></script>
+}
+
+
+

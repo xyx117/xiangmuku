@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string dgtitle = ViewBag.muluName;
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+}
+
+<table id="dg_ld" class="easyui-datagrid" style="height:auto;width:100%">
+    <thead>
+        <tr>
+            <th data-options="field:'XmName',align:'center',width:'24%',formatter:TitleFormatter" rowspan="2">项目名称</th>
+            <th data-options="field:'Xuhao',align:'center',width:'7%'" rowspan="2">排名</th>
+            <th data-options="field:'zongjine',align:'center',width:'5%'" rowspan="2">金额<br />(万元)</th>
+            <th colspan="1">操作</th>
+            <th colspan="2">审核状态</th>
+            <th data-options="field:'Beizhu',align:'center',width:'22%',formatter: TitleFormatter_jj" rowspan="2">简介</th>
+            <th data-options="field:'Chuangjianshijian',align:'center',formatter:formatDatebox,width:'10%'" rowspan="2">创建时间</th>
+        </tr>
+        <tr>
+            <th data-options="field:'xmrizhi',align:'center',width:'10%',formatter: ygxmrizhi">①</th>
+            <th data-options="field:'bmfzrshenhe',align:'center',width:'10%',formatter:bmfzrtubiao">部门负责人</th>
+            <th data-options="field:'ywzyshenhe',align:'center',width:'10%',formatter:ywzybubiao">业务部门</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="bushenld_toolbar" style="height: 32px; padding: 2px 5px; background:#ddd">
+    <div style="float: left">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tubiao',plain:true" onclick="tb_ld()">图表</a>
+    </div>
+
+    <div style="float: right">
+        部门筛选:
+        <select id="suoshuxueyuan" name="suoshuxueyuan" class="easyui-combobox" style="width:200px" data-options="editable:false">
+            @foreach (var item in ViewBag.fgld_sx_bumen)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+    </div>
+</div>
+
+
+@section footer{
+    <script type="text/javascript" src="~/Scripts/myScript/datagrid-groupview.js"></script>
+    <script type="text/javascript">
+        var url, dgtitle = '@dgtitle', loingid = '@loingid';    
+    </script>
+    
+    <script src="~/homescript/xiangmuguanli/bushen_ld_shen.js"></script>
+}
+
+
+
+
+
+

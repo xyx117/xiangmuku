@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int xmid = ViewBag.xmid; ;
+    string xmname = ViewBag.xmname;
+    string xmgl_jbxx = ViewBag.xmgl_jbxx;
+    var sf = DateTime.Now.ToString();
+}
+<div class="container">
+    <div class="row">
+        <form id="jbxx_fm" method="post" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-md-2 control-label">项目名称:</label>
+                <div class="col-md-10">
+                    <input name="Xiangmumingcheng" type="text" disabled value="@xmname" class="easyui-textbox" style="overflow-x: visible;  height:30px;width:80%" />@*width: 500px;*@
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">开始时间:</label>
+                <div class="col-md-10">
+                    <input name="Kaishishijian" id="star" type="text" class="easyui-datebox" data-options="editable:false,formatter:formatDatebox" style="width: 80%; height:30px;" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">结束时间:</label>
+                <div class="col-md-10">
+                    <input name="Jieshushijian" id="end" type="text" class="easyui-datebox" data-options="editable:false,validType:'md[\'star\']'" style="width: 80%; height:30px;" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">政策依据:</label>
+                <div class="col-md-10">
+                    <input id="Zhengceyiju" name="Zhengceyiju" type="text" data-options="multiline:true,icons:[]" class="easyui-textbox" style="height: 150px; width: 80%; " />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">项目背景:</label>
+                <div class="col-md-10">
+                    <input id="Xiangmubeijing" name="Xiangmubeijing" type="text" data-options="multiline:true,icons:[]" class="easyui-textbox" style="height: 150px; width: 80%;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">实施地址:</label>
+                <div class="col-md-10">
+                    <input id="shishidizhi" name="shishidizhi" type="text" data-options="icons:[]" class="easyui-textbox" style="width: 80%; height:30px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">经办人:</label>
+                <div class="col-md-10">
+                    <input id="jingbanren" name="jingbanren" type="text" data-options="icons:[]" class="easyui-textbox" style="width: 80%; height:30px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">联系电话:</label>
+                <div class="col-md-10">
+                    <input id="Lianxidianhua" name="Lianxidianhua" type="text" data-options="icons:[]" class="easyui-textbox" style="width: 80%; height:30px;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @if (xmgl_jbxx == "0")
+                    {
+                        <a href="javascript:void(0)" id="addjbxx" class="btn btn-default" onclick="add_Form()" style="width:70px;">保存</a>
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0)" class="btn btn-default" onclick="add_Form()" style="width:70px">更新</a>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var url, jbxx_yt = '@xmgl_jbxx', xmname = '@xmname', xmid = '@xmid', sf = '@sf';
+</script>
+
+<script src="~/homescript/xiangmuguanli/wsxx_jbxx.js"></script>
+
+
+
+
+

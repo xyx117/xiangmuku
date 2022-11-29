@@ -1,0 +1,74 @@
+﻿<div class="form-horizontal" style="width:98%">
+    @*<h4>预算项目查看</h4>*@
+@{string xmname = ViewBag.name;}    
+    <div class="form-group">
+        @*新加上的年度*@
+        <div class="col-md-1"></div>
+        @Html.Label("项目名称", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBox("xmname", xmname, new { @class = "form-control" })            
+        </div>        
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("开始日期", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBox("kaishiriqi","" ,new { @class = "form-control"})            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("结束日期", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBox("jieshuriq", "",new { @class = "form-control" })            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("政策依据", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBox("zheceyiju", "",new { @class = "form-control"})            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("项目背景", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBox("xiangmubeijing","", new { @class = "form-control"})            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("实施地址", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBox("shishidizhi","", new { @class = "form-control" })           
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("联系电话", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBox("lianxidianhua", "",new { @class = "form-control"})            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("经办人", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBox("jingbanren","", new { @class = "form-control" })            
+        </div>
+    </div> 
+</div>
+
+
+
+
+
+

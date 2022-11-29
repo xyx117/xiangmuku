@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNet.Identity
+@{   
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+    string username = User.Identity.GetUserName();
+}
+<div id="p" class="easyui-panel" title="位置：基本设置>>密码修改" style="width:auto;height:auto;padding:10px;">
+
+
+    <form id="setpaw_fm" method="post" style="width:100%;height:100%;">
+        <div class="fitem">
+            @*<label style="font:bold;font-size:18px">修改密码</label>*@
+            (建议您定期更改密码以确保账户安全)
+            
+            <p style="color:red">密码组成应包含 数字、字母和特殊符号，长度至少八位</p>
+        </div>
+        <hr />
+        <div class="fitem" style="margin:20px">
+            <label>请输新密码:</label>
+            <input id="userpassword" name="password" type="password" data-options="icons:[],validType:'style_input'" style="height:35px; width: 410px" class="easyui-validatebox textbox" required>
+        </div>
+
+        <div class="fitem" style="margin:20px">
+            <label>确认新密码:</label>   @*padding-left: 5px;*@
+            <input id="confirmPassword" name="confirmPassword" type="password" style=" height: 35px; width: 410px; " class="easyui-validatebox textbox" data-options="icons:[],validType:'equalTo[\'#userpassword\']'" required>
+        </div>
+
+        <hr />
+        <div id="bmrestpaw_buttons" style="padding: 5px; margin: 10px">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" id="sumit" onclick="restpwd()" style="width:95px;height:30px">确定</a>
+            @*<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#setpaw_dlg').dialog('close')" style="width: 95px; height: 30px">取消</a>*@
+        </div>
+    </form>
+</div>
+
+@section footer{
+    <script type="text/javascript">
+        var url, loingid = '@loingid';                      
+    </script>
+
+    <script src="~/homescript/account/rsetpwindex_old.js">
+        //var url =         
+    </script>
+
+    <style type="text/css">
+        #setpaw_fm {
+            margin: 0;
+            padding: 10px 30px;
+        }
+        .ftitle {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .fitem {
+            margin-bottom: 5px;
+        }
+            .fitem label {
+                display: inline-block;
+                width: 80px;
+            }
+            .fitem input {
+                width: 160px;
+            }
+    </style>
+}
+

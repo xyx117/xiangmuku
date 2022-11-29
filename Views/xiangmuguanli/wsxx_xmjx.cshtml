@@ -1,0 +1,206 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; ;
+    
+    int xmid = ViewBag.xmid; ;
+    string xmname = ViewBag.xmname;
+
+    string xmgl_cccx = ViewBag.xmgl_cccx;
+
+    var sf = DateTime.Now.ToString();
+}
+
+<div>
+    <div><p><img src="~/Content/image/shuoming.png"><a href="~/Content/tianxieshuoming/chanchuchengxiao.htm" target="_blank" style="text-decoration:underline" title="产出及成效填写说明">填写说明</a></p></div>
+    <div id="p_chengxiao" class="easyui-panel" title="产出及成效" style="width:98%; height:280px;" data-options="collapsible:true">
+        <center>
+            <form id="xmchengxiao_fm" method="post">                
+                <table cellpadding="5" style="width:90%;text-align:center;margin-top:10px">
+                    <tr hidden>
+                        <td >ID:</td>
+                        <td><input name="xiangmuguanliID" type="text" value="@xmid" class="easyui-textbox" /></td>
+                    </tr>
+                    <tr>
+                        <td ><strong>产出:</strong></td>
+                        <td><input id="xmchanchu" name="xmchanchu" type="text" class="easyui-textbox" data-options="multiline:true,icons:[]" style="width: 95%; height: 80px;" /></td>
+                    </tr>
+                    <tr>
+                        <td ><strong>成效:</strong> </td>
+                        <td><input id="xmchengxiao" name="xmchengxiao" type="text" class="easyui-textbox" data-options="multiline:true,icons:[]" style="width:95%; height: 80px;" /></td>
+                    </tr>
+                </table>
+
+            </form>
+            <div style="padding-top:10px">
+
+                @if (xmgl_cccx == "0")
+                {
+                    <a href="javascript:void(0)" id="addcccx" class="easyui-linkbutton" style="width:70px;" onclick="add_cccx()">保存</a>
+                }
+                else
+                {
+                    <a href="javascript:void(0)" class="easyui-linkbutton" style="width:70px" onclick="add_cccx()">更新</a>
+                }
+
+            </div>
+        </center>
+    </div>
+    <hr />
+    <div>
+        <p><img src="~/Content/image/shuoming.png" /><a href="~/Content/tianxieshuoming/chanchuxiaolv.htm" target="_blank" style="text-decoration:underline" title="产出及成效指标填写说明">填写说明</a></p>
+    </div>
+
+    <table id="jxcc_dg" class="easyui-datagrid" title="产出指标" style="width:98%;height:auto;">
+        <thead>
+            <tr>
+                <th data-options="field:'jixiaozhibiao',align:'center',width:'20%'">绩效指标</th>
+                <th data-options="field:'jixiaomubiao',align:'center',width:'20%'">绩效目标</th>
+                <th data-options="field:'jixiaoyou',align:'center',width:'15%'">优</th>
+                <th data-options="field:'jixiaoliang',align:'center',width:'15%'">良</th>
+                <th data-options="field:'jixiaozhong',align:'center',width:'15%'">中</th>
+                <th data-options="field:'jixiaocha',align:'center',width:'14%'">差</th>
+            </tr>
+        </thead>
+    </table>
+
+    <div id="jxcc_toolbar">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="jxcc_new()">新 增</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="jxcc_edit()">编 辑</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="jxcc_destroy()">删 除</a>
+    </div>
+
+    <div id="jxcc_dlg" class="easyui-dialog" style="width:50%;height:auto;padding:10px 20px" data-options="closed:'true',buttons:'#jxcc_buttons'">        
+        <form id="jxcc_fm" method="post" novalidate>            
+            <div class="fitem">
+                <label>绩效指标:</label>
+                <input name="jixiaozhibiao" id="cc_zhibiao" data-options="multiline:true,icons:[]" class="easyui-textbox" style="width:70%;height:60px" required> @*style="width:260px;height:60px;"*@
+            </div>
+
+            <div class="fitem">
+                <label>绩效目标:</label>
+                <input name="jixiaomubiao" id="cc_mubiao" data-options="multiline:true,icons:[]" class="easyui-textbox" style="width:70%; height: 60px" required>
+            </div>
+
+            <div class="fitem">
+                <label>绩效优:</label>
+                <input id="cc_you" name="jixiaoyou" data-options="icons:[]" class="easyui-textbox" style="width:70%; height: 30px">
+            </div>
+
+            <div class="fitem">
+                <label>绩效良：</label>
+                <input id="cc_liang" name="jixiaoliang" data-options="icons:[]" class="easyui-textbox" style="width:70%; height: 30px">
+            </div>
+
+            <div class="fitem">
+                <label>绩效中:</label>
+                <input id="cc_zhong" name="jixiaozhong" data-options="icons:[]" class="easyui-textbox" style="width:70%; height: 30px">
+            </div>
+            <div class="fitem">
+                <label>绩效差:</label>
+                <input id="cc_cha" name="jixiaocha" class="easyui-textbox" data-options="icons:[]" style="width: 70%; height: 30px">
+            </div>
+        </form>
+    </div>
+    <div id="jxcc_buttons" style="text-align:center;padding:5px">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="jxcc_save()" style="width:90px;">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#jxcc_dlg').dialog('close')" style="width:90px;">取消</a>
+    </div>
+    <hr />
+    <table id="jxxl_dg" class="easyui-datagrid" title="成效指标" style="width:98%;height: auto;">
+        <thead>
+            <tr>
+                <th data-options="field:'jixiaozhibiao',align:'center',width:'20%'">绩效指标</th>
+                <th data-options="field:'jixiaomubiao',align:'center',width:'20%'">绩效目标</th>
+                <th data-options="field:'jixiaoyou',align:'center',width:'15%'">优</th>
+                <th data-options="field:'jixiaoliang',align:'center',width:'15%'">良</th>
+                <th data-options="field:'jixiaozhong',align:'center',width:'15%'">中</th>
+                <th data-options="field:'jixiaocha',align:'center',width:'14%'">差</th>
+            </tr>
+        </thead>
+    </table>
+
+    <div id="jxxl_toolbar">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="jxxl_new()">新 增</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="jxxl_edit()">编 辑</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="jxxl_destroy()">删 除</a>
+    </div>
+
+    <div id="jxxl_dlg" class="easyui-dialog" style="width: 50%; height: auto;padding: 10px 20px" data-options="closed:'true',buttons:'#jxxl_buttons'">
+        
+        <form id="jxxl_fm" method="post" novalidate>
+            
+            <div class="fitem">
+                <label>绩效指标:</label>
+                <input name="jixiaozhibiao" id="xl_zhibiao" data-options="multiline:true,icons:[]" class="easyui-textbox" style="width:70%;height:60px" required>
+            </div>
+
+            <div class="fitem">
+                <label>绩效目标:</label>
+                <input name="jixiaomubiao" id="xl_mubiao" data-options="multiline:true,icons:[]" class="easyui-textbox" style="width:70%;height:60px;margin:10px" required>
+            </div>
+
+            <div class="fitem">
+                <label>绩效优:</label>
+                <input id="xl_you" name="jixiaoyou" data-options="icons:[]" class="easyui-textbox" style="width:70%;height:30px">
+            </div>
+
+            <div class="fitem">
+                <label>绩效良：</label>
+                <input id="xl_liang" name="jixiaoliang" data-options="icons:[]" class="easyui-textbox" style="width:70%;height:30px">
+            </div>
+
+            <div class="fitem">
+                <label>绩效中:</label>
+                <input id="xl_zhong" name="jixiaozhong" data-options="icons:[]" class="easyui-textbox" style="width:70%;height:30px">
+            </div>
+
+            <div class="fitem">
+                <label>绩效差:</label>
+                <input name="jixiaocha" id="xl_cha" class="easyui-textbox" data-options="icons:[]" style="width:70%;height:30px">
+            </div>
+        </form>
+    </div>
+    <div id="jxxl_buttons" style="text-align:center;padding:5px">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="jxxl_save()" style="width:90px;">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#jxxl_dlg').dialog('close')" style="width:90px;">取消</a>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    var url,xmid='@xmid',xmname='@xmname',sf='@sf',cccx_yt = '@xmgl_cccx';
+</script>
+
+<script src="~/homescript/xiangmuguanli/wsxx_xmjx.js">
+    
+</script>
+
+
+<style type="text/css">
+    .ftitle {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 0;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .fitem {
+        margin-bottom: 7px;
+    }
+
+        .fitem label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        .fitem input {
+            width: 260px;
+            height: 30px;
+        }
+
+    .easyui-validatebox {
+        text-align: center;
+        padding-top: 10%;
+    }
+</style>

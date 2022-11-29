@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<table id="bumen_dg" class="easyui-datagrid" title="位置：基本设置>>部门设置" style="height:auto;width:100%">
+    <thead>
+        <tr>
+            <th data-options="field:'BmName',align:'center',width:'50%'">部门名称</th>
+            <th data-options="field:'Bmxingzhi',align:'center',width:'45%'">部门性质</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="toolbar" style="height: 32px; padding: 2px 5px; background:#ddd;">
+    <div style="float: left;">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="newBumen()">新 增</a>
+    </div>
+    <div style="float: left;">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editBumen()">编 辑</a>
+    </div>
+    <div style="float: left;">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="destroyBumen()">删 除</a>
+    </div>
+    <div style="float: right">
+        <input class="easyui-searchbox" data-options="prompt:'请输入部门名称进行查询',searcher:doSearch" style="width:200px">
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog" style="width:560px;height:280px;padding:10px 20px" data-options="closed:'true',buttons:'#dlg-buttons'">
+    <div class="ftitle">部门设置</div>
+    <form id="fm" method="post" novalidate>
+        <div class="fitem">
+            <label>部门名称:</label>
+            <input id="BmName" name="BmName" class="easyui-textbox" data-options="icons:[],validType:'checknameissame'" style="width:350px;height:30px" required>
+        </div>
+        <div class="fitem">
+            <label>部门性质:</label>
+            <select id="bmxingzhi" name="Bmxingzhi" class="easyui-combobox" style="width:350px;height:30px" data-options="editable:false">
+                @foreach (var item in ViewBag.xingzhi)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+    </form>
+</div>
+
+
+<div id="dlg-buttons" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="saveBumen()" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+@section footer{
+    <script type="text/javascript">
+        var url;
+    </script>
+
+    <script src="~/homescript/bmshezhi/bmshezhiindex.js">
+    </script>
+
+    <style type="text/css">
+        #fm {
+            margin: 0;
+            padding: 10px 30px;
+        }
+
+        .ftitle {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .fitem {
+            margin-bottom: 10px;
+        }
+
+            .fitem label {
+                display: inline-block;
+                width: 80px;
+            }
+
+            .fitem input {
+                width: 160px;
+            }
+    </style>
+}
+

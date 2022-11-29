@@ -1,0 +1,214 @@
+﻿@model xmkgl.Models.xmlxpj
+@{
+    ViewBag.Title = "chakan_lxpj";
+    int xmid = ViewBag.xmid;
+}
+
+<center>
+    <form id="lxpj_fm" name="lxpj_fm" method="post">
+        @*这个method属性要放在data-option外面，放在里面不生效*@
+        <table style="width:100%;" class="table table-bordered">
+            <tr hidden>
+                <td>ID:</td>
+                <td><input name="xiangmuguanliID" type="text" value="@xmid" style="width:100%;height:100%" class="easyui-textbox" /></td>
+            </tr>
+            <tr id="lx_biaoti" style="text-align: center; font-weight: bold">
+                <td style="width: 13%;height: 25px;">评级内容</td>
+                <td style="width: 20%;">关键评级问题</td>
+                <td style="width: 20%; ">评级标准</td>
+                <td style="width: 40%; ">说明及依据</td>
+                <td style="width: 7%; ">自评得分</td>
+            </tr>
+            <tr>
+                <td rowspan="8"> 一、项目定位(35分)</td>                 @*这里改为单元格占8列*@
+                <td rowspan="3"> 1.项目是否具有较强的相关性？(15分)</td>
+                <td>项目是否符合省委、省政府的发展规划、优先发展重点或部门的职能分工(5分)</td>
+                <td>@Html.DisplayFor(model => model.one_1_1, new { @class = "form-control" })</td>
+                <td align="center">@Html.DisplayFor(model => model.one_1_1_f, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td>项目是否列入本单位项目年度工作计划(5分)</td>
+                <td>@Html.DisplayFor(model => model.one_1_2, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.one_1_2_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>项目的产出是否能满足需求(5分)</td>
+                <td>@Html.DisplayFor(model => model.one_1_3, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.one_1_3_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td> 2．项目是否避免了影响项目效果或效率的重大缺陷？(7分)</td>       @*这里改为单元格只占一列*@
+                <td>是否存在技术上的瓶颈(7分)</td>
+                <td>@Html.DisplayFor(model => model.one_2_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.one_2_1_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">3．项目是否避免了与其他项目的重复？(7分)</td>    @*这里的单元格改为只占2列*@
+                <td> 项目是否与已实施的项目重复(3分)</td>
+                <td>@Html.DisplayFor(model => model.one_3_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.one_3_1_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>项目是否与本部门或其他部门待实施的项目重复？(4分)</td>
+                <td>@Html.DisplayFor(model => model.one_3_2, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.one_3_2_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">4．项目支出能否有效用于项目目标和项目受益人？(6分)</td>
+                <td> 是否避免了在无关活动上的支出？(3分) </td>
+
+                <td>@Html.DisplayFor(model => model.one_4_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.one_4_1_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>项目受益人是否明确？(3分)</td>
+                <td>@Html.DisplayFor(model => model.one_4_2, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.one_4_2_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="10">二、项目计划(40分)　 </td>
+                <td rowspan="2"> 5．项目的前期准备是否充分？(10分) </td>
+                <td> 项目是否有充分的前期调研和论证？(5分) </td>
+                <td>@Html.DisplayFor(model => model.two_1_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_1_1_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td> 项目实施所需的物质、技术、制度条件是否具备？(5分) </td>
+                <td>@Html.DisplayFor(model => model.two_1_2, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_1_2_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="3"> 6．项目是否有明确的实施计划？(13分)</td>
+                <td>项目的实施主体是否明确？(4分) </td>
+                <td>@Html.DisplayFor(model => model.two_2_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_2_1_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>项目的实施时间是否明确？(4分)</td>
+                <td>@Html.DisplayFor(model => model.two_2_2, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_2_2_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>各级管理者在项目成本控制、进度、结果上的责任是否明确？(5分)</td>
+                <td>@Html.DisplayFor(model => model.two_2_3, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_2_3_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="3">7．项目的绩效指标体系是否完整？(12分) </td>
+                <td> 是否有充分反映项目目标的绩效指标？(4分) </td>
+                <td>@Html.DisplayFor(model => model.two_3_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_3_1_f, new { @class = "form-control" })
+                </td>
+            </tr>            
+            <tr>
+                <td> 绩效目标是否具体、量化？(5分) </td>
+                <td>@Html.DisplayFor(model => model.two_3_2, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_3_2_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td> 项目的绩效目标是否具有挑战性？(3分) </td>
+                <td>@Html.DisplayFor(model => model.two_3_3, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_3_3_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2"> 8．项目预算申请是否全面、规范？(5分) </td>
+                <td> 项目预算是否有漏项？(2分) </td>
+                <td>@Html.DisplayFor(model => model.two_4_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_4_1_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td> 项目预算的测算是否有规范的支出标准依据？(3分) </td>
+                <td>@Html.DisplayFor(model => model.two_4_2, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.two_4_2_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="4"> 三、项目管理(10分) </td>
+                <td rowspan="2">9．部门项目管理水平是否得到一定程度的提高？(4分)</td>
+                <td> 前三年部门财政支出执行情况是否持续改进？(2分) </td>
+                <td>@Html.DisplayFor(model => model.three_1_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.three_1_1_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td> 同类项目支出进度同比是否加快？(2分)</td>
+                <td>@Html.DisplayFor(model => model.three_1_2, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.three_1_2_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2"> 10．部门是否运用项目绩效信息加强项目管理？(6分)</td>    @*这里的单元格改为只占2格*@
+                <td> 是否按要求对上年度项目进行绩效自评？(3分)</td>
+                <td>@Html.DisplayFor(model => model.three_2_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.three_2_1_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td> 是否运用评价结果改进了项目管理？(3分)</td>
+                <td>@Html.DisplayFor(model => model.three_2_3, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.three_2_3_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2"> 四、项目结果(15分)</td>
+                <td rowspan="2">11．项目预期结果能否实现？(15分)</td>
+                <td> 能否按时完成项目？(7分)</td>
+                <td>@Html.DisplayFor(model => model.four_1_1, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.four_1_1_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td> 能否实现承诺的绩效目标？(8分)</td>
+                <td>@Html.DisplayFor(model => model.four_1_2, new { @class = "form-control" })</td>
+                <td align="center">
+                    @Html.DisplayFor(model => model.four_1_2_f, new { @class = "form-control" })
+                </td>
+            </tr>
+            <tr id="lx_mowei" style="text-align: center; height: 25px;">
+                <td colspan="4"> 项目总得分</td>
+                <td>@Html.DisplayFor(model => model.zongfen, new { @class = "form-control" })</td>
+            </tr>
+            <tr id="lx_mowei" style="text-align: center; height: 25px;">
+                <td colspan="4">项目等级</td>
+                <td>@Html.DisplayFor(model => model.xmdengji, new { @class = "form-control" })</td>
+            </tr>
+        </table>
+    </form>
+</center>

@@ -1,0 +1,174 @@
+﻿@model xmkgl.Models.xmjibenxinxi
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Details";
+    int xmid = ViewBag.xmid;
+    var sf = DateTime.Now.ToString();
+    string username = User.Identity.GetUserName();
+    string userid = User.Identity.GetUserId();
+}
+
+<div class="form-horizontal" style="width:98%">
+    <div class="form-group">
+        @*新加上的年度*@
+        <div class="col-md-1"></div>
+        @Html.Label("项目名称", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(model => model.Xiangmumingcheng, new { @class = "form-control", @readOnly = "readOnly" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("开始日期", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(model => model.Kaishishijian, new { @class = "form-control", Value = Model.Kaishishijian.ToString("yyyy-MM-dd"), @readOnly = "readOnly" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("结束日期", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(model => model.Jieshushijian, new { @class = "form-control", Value = Model.Jieshushijian.ToString("yyyy-MM-dd"), @readOnly = "readOnly" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("政策依据", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextAreaFor(model => model.Zhengceyiju, new { @class = "form-control", @readOnly = "readOnly", @style = "height:120px;", @wrap = "virtual" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("项目背景", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextAreaFor(model => model.Xiangmubeijing, new { @class = "form-control", @readOnly = "readOnly", @style = "height:120px", @wrap = "virtual" })   @*  wrap="physical" 这里设置换行时没有效果*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("实施地址", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(model => model.shishidizhi, new { @class = "form-control", @readOnly = "readOnly" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("联系电话", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(model => model.Lianxidianhua, new { @class = "form-control", @readOnly = "readOnly" })
+        </div>
+    </div>    
+
+    <div class="form-group">
+        <div class="col-md-1"></div>
+        @Html.Label("经办人", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextBoxFor(model => model.jingbanren, new { @class = "form-control", @readOnly = "readOnly" })
+        </div>
+    </div>
+
+    @*校内多部门评审意见备注
+    1.判断字段是否为空，非空则加载 筛选出来的内容*@
+    @if (User.IsInRole("业务专员")|| User.IsInRole("评委")||User.IsInRole("分管领导")||User.IsInRole("领导"))
+    {        
+        <form id="xiaoneibeizhu_load" method="post" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-1"></div>
+                @Html.Label("项目备注记录", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">                    
+                    <input id="beizhu" name="beizhu" type="text" disabled data-options="multiline:true,icons:[]" class="easyui-textbox" style="height: 150px; width: 100%; " />
+                </div>
+            </div>
+        </form>
+    }
+    
+    @if (User.IsInRole("业务专员"))
+    {
+        <form id="xiaoneibeizhu_fm" method="post" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-1"></div>
+                @Html.Label("项目备注:", htmlAttributes: new { @class = "control-label col-md-2" })                
+                <div class="col-md-6">
+                    <input id="xiaoneibeizhu" name="xiaoneibeizhu" type="text" data-options="multiline:true,icons:[],validType:['stringCheckSub']" class="easyui-textbox" style="width: 100%; height:150px;" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"></div>               
+                <div class="col-md-2">
+                    <a href="javascript:void(0)" id="addjbxx" class="btn btn-default" onclick="beizhuForm()" style="width:70px;">保存</a>
+                </div>
+                <div class="col-md-7"></div> 
+            </div>
+        </form>
+    }
+</div>
+    
+<script type="text/javascript">
+    var url;
+    $(function () {
+        $('#xiaoneibeizhu_load').form('load', '/xiangmuguanli/load_xiaoneibeizhu?xmid=@xmid&shijian=@sf&username=@username&userid=@userid');
+    });
+
+    //对textbox进行验证
+    $.extend($.fn.textbox.defaults.rules, {
+        positive_int: {
+            validator: function (value, param) {
+                if (value) {
+                    return /^[0-9]*[1-9][0-9]*$/.test(value);
+                } else {
+                    return true;
+                }
+            },
+            message: '只能输入正整数.'
+        },
+        stringCheckSub: {
+            validator: function (value) {
+                return /^[\w\u4E00-\u9FA5（）《》，。！￥！【】\-(){}\[\]]+$/.test(value);
+            },
+            message: "只能包括中文、英文字母、数字及（）《》[]【】(){}-等符号。"
+        }
+    });    
+
+    //基本信息保存按钮
+    function beizhuForm() {        
+        url = '/xiangmuguanli/add_xiaoneibeizhu?xmid=@xmid&userid=@userid';        
+        //$.messager.progress();	// 提示进度条
+        $('#xiaoneibeizhu_fm').form('submit', {
+            url:url ,
+            success: function (result) {
+                result = JSON.parse(result);   //IE浏览器在后台操作完成后返回提示信息，转化为json字符串格式
+                if (result.success) {
+                    //$.messager.progress('close');	// hide progress bar while submit successfully                    
+                    $.messager.show({
+                        title: '提示',
+                        msg: result.message
+                    });
+                    $('#xiaoneibeizhu_load').form('load', '/xiangmuguanli/load_xiaoneibeizhu?xmid=@xmid&shijian=@sf&username=@username&userid=@userid');                    
+                    $('#xiaoneibeizhu_fm').form('clear');
+                }
+                else {                    
+                    $.messager.show({
+                        title: '错误提示',
+                        msg: result.message
+                    });
+                }
+            }
+        })
+    };
+</script>
+
+
+
+
+
+
+
+

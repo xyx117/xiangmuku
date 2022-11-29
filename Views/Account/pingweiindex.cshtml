@@ -1,0 +1,146 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Index";
+
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+    string username = User.Identity.GetUserName();
+}
+@*业务专员添加评委的页面*@
+
+<table id="pw_dg" title="位置：基本设置>>评委管理" class="easyui-datagrid" style="height:auto;">
+    <thead>
+        <tr>
+            <th data-options="field:'UserName',align:'center',width:'10%'">用户名</th>
+            <th data-options="field:'zhenshiname',align:'center',width:'10%'">真实姓名</th>
+
+            <th data-options="field:'pingshenmulu',align:'center',width:'20%',formatter: TitleFormatter">参审目录</th>
+
+            <th data-options="field:'suoshuxueyuan',align:'center',width:'25%',formatter: TitleFormatter">所评部门</th>
+
+            <th data-options="field:'pingshenjindu',align:'center',width:'10%',formatter: pingshenjindu">评审进度</th>
+
+            <th data-options="field:'pingshenrenwu',align:'center',width:'10%'">总数/分配数</th>
+
+            <th data-options="field:'PhoneNumber',align:'center',width:'14%'">联系电话</th>
+
+        </tr>
+    </thead>
+</table>
+
+<div id="pw_toolbar">
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="newUser()">新 增</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editUser()">编 辑</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="editpassword()">重置密码</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="destroyUser()">删 除</a>
+</div>
+
+<div id="pw_jindu" class="easyui-dialog" style="width:460px;height:470px;padding:10px 20px" data-options="closed:'false'">
+    <iframe id="tubiao" style="width:100%;height:100%;border:0px;"></iframe>
+</div>
+
+<div id="pw_dlg" class="easyui-dialog" style="width: 540px; height: 480px; padding: 10px 20px" data-options="closed:'true',buttons:'#user_buttons'">
+    <div class="ftitle">新增评委设置</div>
+    <form id="pw_fm" name="pw_fm" method="post" style="padding-left:10px" novalidate>
+        <div class="fitem">
+            <label>用户名:</label>
+            <input name="UserName" id="name" class="easyui-textbox" data-options="icons:[],validType:'checknameissame'" style="width: 320px; height: 30px;" required>
+        </div>
+        <div class="fitem">
+            <label>真实姓名:</label>
+            <input name="zhenshiname" id="zhenshiname" data-options="icons:[]" style="width: 320px; height: 30px;" required>
+        </div>
+        <div class="fitem" hidden>
+            <label>parentID:</label>
+            <input name="parentID" class="easyui-textbox">
+        </div>
+
+        <div class="fitem">
+            <label>参审目录:</label>
+            <select id="pingshenmulu" name="pingshenmulu" class="easyui-combobox" style="width: 320px; height: 30px;" data-options="editable:false,multiple: true" required>
+                @foreach (var item in ViewBag.mululist)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+        <div class="fitem">
+            <label>所评部门:</label>
+            <input id="suoshuxueyuan" name="suoshuxueyuan" style="width: 320px; height: 30px;" required>
+        </div>
+        <div class="fitem">
+            <label>联系电话:</label>
+            <input name="phonenumber" id="phonenumber" class="easyui-textbox" data-options="prompt:'0898-65884963或13198934567',validType:'phoneRex',icons:[]" style="width:320px;height:30px">
+        </div>
+        <div class="fitem" style="display:none">
+            <input name="pingshenrenwu" id="pingshenrenwu" class="easyui-textbox" readonly value="0/0" style="width: 320px; height: 30px; padding-left: 5px; border: none">
+        </div>
+        <div class="fitem" id="pw">
+            <label>密码:</label>
+            <input id="userpassword" name="password" type="password" style="width: 320px; height: 30px; padding-left: 5px" class="easyui-validatebox textbox" data-options="validType:'minLength[6]',icons:[]">@*（初始密码：123456）*@
+        </div>
+        <div class="fitem" id="imf">
+            <label></label>
+            （若输入为空则默认为初始密码）
+        </div>
+        <div class="fitem" id="pw_cf">
+            <label>确认密码:</label>
+            <input name="confirmPassword" id="confirmPassword" type="password" style="width: 320px; height: 30px; padding-left: 5px" class="easyui-validatebox textbox" data-options="icons:[],validType:'equalTo[\'#userpassword\']'">
+        </div>
+        <div>
+            <div style="text-align:right" id="pingshenrenwu1"> </div>
+        </div>
+    </form>
+</div>
+<div id="user_buttons" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="saveUser()" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#pw_dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<div id="restpaw_dlg" class="easyui-dialog" style="width:300px;height:200px;padding:10px 20px" data-options="closed:'true',buttons:'#restpaw_buttons'">
+    <div class="ftitle">用户设置</div>
+    <center>
+        <form id="restpaw_fm" method="post" novalidate>
+            <strong>您确定要重置密码为初始密码吗？</strong>
+        </form>
+    </center>
+</div>
+<div id="restpaw_buttons" style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="restpwd()" style="width:90px">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#restpaw_dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+@section footer{
+    <script type="text/javascript">
+        var url,username='@username';
+    </script>
+
+    <script src="~/homescript/account/pingweiindex_old.js"></script>
+    @*<script src="~/homescript/account/pingweiindex.js"></script>*@
+
+    <style type="text/css">
+        #fm {
+            margin: 0;
+            padding: 10px 30px;
+        }
+
+        .ftitle {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .fitem {
+            margin: 10px;
+        }
+
+            .fitem label {
+                display: inline-block;
+                width: 80px;
+            }
+    </style>
+}
+
+
+

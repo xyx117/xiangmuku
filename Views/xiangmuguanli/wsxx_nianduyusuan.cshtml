@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int xmid = ViewBag.xmid;
+
+    string xmname = ViewBag.xmname;
+
+    string xmgl_ndys = ViewBag.xmgl_ndys;
+
+    decimal zongjine = ViewBag.zongjine;
+
+    var sf = DateTime.Now.ToString();
+
+    int cj_year = ViewBag.cj_year;
+}
+
+<div class="container">
+    <div class="row">
+        <form id="ndys_fm" method="post" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-md-3 control-label">第一年[@(cj_year+1)]申报数（千元）:</label>
+                <div class="col-md-9">
+                    <input id="diyinian" name="diyinian" type="text" data-options="validType:'numeric',icons:[]" class="easyui-textbox" style="height:30px;width: 80%;" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">第二年[@(cj_year+2)]申报数（千元）:</label>
+                <div class="col-md-9">
+                    <input id="diernian" name="diernian" type="text" data-options="validType:'numeric',icons:[]" class="easyui-textbox" style="width:80%;height:30px;" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">第三年[@(cj_year+3)]申报数（千元）:</label>
+                <div class="col-md-9">
+                    <input id="disannian" name="disannian" type="text" data-options="validType:'numeric',icons:[]" class="easyui-textbox" style="width:80%;height:30px;" required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">预算说明:</label>
+                <div class="col-md-9">
+                    <input id="yusuanshuoming" name="yusuanshuoming" type="text" data-options="multiline:true,icons:[]" class="easyui-textbox" style="width: 80%; height:150px;" />
+                </div>
+            </div>         
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9">
+                    @if (xmgl_ndys == "0")
+                    {
+                        <a href="javascript:void(0)" id="ndyssave" onclick="add_ndys()" class="btn btn-default" style="width:70px;">保存</a>
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0)" onclick="add_ndys()" class="btn btn-default" style="width:70px">更新</a>
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label"></label>
+                <div class="col-md-9">
+                    注:项目若分年度实施，则各年度申报数之和就是项目的总金额！<br/>若某年度没有申报数须零申报，应填“0”。
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    var url,xmid='@xmid',xmname='@xmname',sf='@sf',ndys_yt = '@xmgl_ndys';                   
+</script>
+
+<script src="~/homescript/xiangmuguanli/wsxx_ndys.js"></script>

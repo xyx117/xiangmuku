@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "chakan_xmjx";
+    int xmid = ViewBag.xmid;
+    string xmgl_cccx = ViewBag.xmgl_cccx;
+}
+<div>
+    <div id="p_chengxiao" class="easyui-panel" title="项目产出及成效" style="width:98%;height:280px;" data-options="collapsible:true">
+        <center>
+            <form id="xmchengxiao_fm">
+                <table cellpadding="5" style="width:80%;text-align:center;margin-top:10px">
+                    <tr hidden>
+                        <td>ID</td>
+                        <td><input name="xiangmuguanliID" type="text" value="@xmid" class="easyui-textbox" /></td>
+                    </tr>
+                    <tr>
+                        <td><strong>产出:</strong></td>
+                        <td><input name="xmchanchu" type="text" class="easyui-textbox" data-options="multiline:true," style="width:95%; height:110px;" /></td>
+                    </tr>
+                    <tr>
+                        <td><strong>成效:</strong></td>
+                        <td><input name="xmchengxiao" type="text" class="easyui-textbox" data-options="multiline:true" style="width:95%; height:110px;" /></td>
+                    </tr>
+                </table>
+            </form>
+        </center>
+    </div>
+    <hr />
+    <table id="jxcc_dg" class="easyui-datagrid" title="产出指标" style="width:98%;height:auto;">
+        <thead>
+            <tr>
+                <th data-options=" field:'jixiaozhibiao',align:'center',width:'20%'">
+                    绩效指标
+                </th>
+                <th data-options="field:'jixiaomubiao',align:'center',width:'20%'">绩效目标</th>
+                <th data-options="field:'jixiaoyou',align:'center',width:'15%'">优</th>
+                <th data-options="field:'jixiaoliang',align:'center',width:'15%'">良</th>
+                <th data-options="field:'jixiaozhong',align:'center',width:'15%'">中</th>
+                <th data-options="field:'jixiaocha',align:'center',width:'14%'">差</th>
+            </tr>
+        </thead>
+    </table>
+    <hr />
+    <table id="jxxl_dg" class="easyui-datagrid" title="成效指标" style="width:98%;height:auto;">
+        <thead>
+            <tr>
+                <th data-options="field:'jixiaozhibiao',align:'center',width:'20%'">绩效指标</th>
+                <th data-options="field:'jixiaomubiao',align:'center',width:'20%'">绩效目标</th>
+                <th data-options="field:'jixiaoyou',align:'center',width:'15%'">优</th>
+                <th data-options="field:'jixiaoliang',align:'center',width:'15%'">良</th>
+                <th data-options="field:'jixiaozhong',align:'center',width:'15%'">中</th>
+                <th data-options="field:'jixiaocha',align:'center',width:'14%'">差</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section footer{
+    <script type="text/javascript">
+        var url, xmid = '@xmid', cccx_yt = '@xmgl_cccx';
+    </script>
+    <script src="~/homescript/xiangmuguanli/chakan_xmjx.js"></script>
+
+}

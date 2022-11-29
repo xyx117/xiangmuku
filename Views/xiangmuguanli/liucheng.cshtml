@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "shenhe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int xmid = ViewBag.xmid;
+    string xmname = ViewBag.xmname;
+    string fgldshenhefou = ViewBag.fgldshenhefou;
+    string role = ViewBag.role;
+    var step = ViewBag.step;
+    var step2 = ViewBag.step2;
+    var step3 = ViewBag.step3;
+    var step4 = ViewBag.step4;
+}
+<br><br>
+<div style="padding:40px 5px 0px 5px">
+    @if (role == "评委" || role == "业务专员" || role == "领导" || role == "财务主管")
+    {
+        if (fgldshenhefou == "审核")
+        {
+            <div class="ystep_shenhe"></div>
+        }
+        else
+        {
+            <div class="ystep_bushen"></div>
+        }
+    }
+    else
+    {
+        if (fgldshenhefou == "审核")          //分管领导，部门负责人，员工
+        {
+            <div class="ystep_shenhe_ybf"></div>
+        }
+        else
+        {
+            <div class="ystep_bushen_ybf"></div>
+        }
+    }
+</div>
+<div style="padding:0px 5px 5px 5px">
+    <table id="dg_yg" class="easyui-datagrid" style="width:100%;height:auto;" title=@xmname data-options="singleSelect:true,collapsible:true,url:'/xiangmuguanli/get_xmliucheng?xmid=@xmid',method:'post',rownumbers:true,pagination:true,autoRowheight:false">
+        <thead>
+            <tr>
+                <th data-options="field:'shenhejiedian',align:'center',width:'15%'">申报节点</th>
+                <th data-options="field:'shenheren',align:'center',width:'10%'">经手人</th>
+                <th data-options="field:'shenhejuese',align:'center',width:'10%'">经手角色</th>
+                <th data-options="field:'shenhejieguo',align:'center',width:'24%',formatter: TitleFormatter">处理结果</th>
+                <th data-options="field:'shenheyijian',align:'center',width:'24%',formatter: TitleFormatter">处理意见</th>
+                <th data-options="field:'shenheshijian',align:'center',width:'15%'">处理时间</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section footer{
+    @*流程图样式*@
+    <script type="text/javascript" src="~/ystep/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/ystep/js/ystep.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/ystep/css/ystep.css">
+    <script type="text/javascript">
+        var step = '@step', step2 = '@step2', step3 = '@step3', step4 = '@step4';
+    </script>
+    <script src="~/homescript/xiangmuguanli/liucheng.js">
+    </script>
+
+}

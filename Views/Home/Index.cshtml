@@ -1,0 +1,101 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "首页";
+
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+}
+
+<style>
+    .footer {
+        width: 100%;
+        text-align: center;
+        line-height: 35px;
+    }
+    .top-bg {
+        background-color: #d8e4fe;
+        height: 80px;
+    }
+</style>
+
+<div id="layout" class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'north',split:true,border:true" style="overflow: hidden; height: 80px;">@*style="background:#0094ff"*@        
+        <div class="top-bg">           
+            <div style="float: left;width:70%;">
+                <a>
+                    <img src="~/Content/image/logo11.png" style="padding-top:5px;">
+                </a>
+            </div>                
+            <div style="float: right; padding-top: 15px; width: 30%;">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div data-options="region:'west',split:true" title="导航菜单" style="width: 180px;">
+        <div id="aa" class="easyui-accordion" style="position: absolute;top:27px;left:0px;right:0px;bottom:0px;">          
+            <div title="公    告" id="tongzhi" data-options="iconCls:'icon-new'">
+            </div>
+            <div title="目录管理" id="xmmlgl" class="easyui-datalist" style="width:99%" data-options="url:'/Home/GetXmmuluData?loingid=@loingid',method:'post',iconCls:'icon-manage',tools:[{iconCls:'icon-reload',handler:function(){$('#xmmlgl').datagrid('reload');}}]">
+
+            </div>          
+            <div title="基本设置" data-options="iconCls:'icon-hammer'">               
+                <ul class="easyui-datalist">
+                    @if (User.IsInRole("业务专员") == true)
+                    {
+                        <li ><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/xmmlshezhi/xmmlshezhiIndex')"><img src='~/Scripts/easyui/themes/icons/mulu.png'/>&nbsp;&nbsp;&nbsp;目录设置</a></li>@*title='分管领导不参与审核'*@
+                        
+                        <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/bumenxingzhi/xingzhiindex')"><img src='~/Scripts/easyui/themes/icons/zidian.png' />&nbsp;&nbsp;&nbsp;部门性质设置</a></li>
+                        
+                        <li><a style="margin-left: 20px; text-decoration: none; icon:url(); " href="javascript:void(0)" onclick="xm('/bmshezhi/bmshezhiIndex')"><img src='~/Scripts/easyui/themes/icons/bumen.png' />&nbsp;&nbsp;&nbsp;部门设置</a></li>
+                        
+                        <li><a data-options="iconCls:'icon-new'" style="margin-left: 20px; text-decoration: none;" href="javascript:void(0)" onclick="xm('/Account/ywzyindex')"><img src='~/Scripts/easyui/themes/icons/yonghu.png' />&nbsp;&nbsp;&nbsp;用户管理</a></li>
+                        
+                        <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/Account/pingweiindex')"><img src='~/Scripts/easyui/themes/icons/pingwei.png' />&nbsp;&nbsp;&nbsp;评委管理</a></li>
+
+                        
+                        <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/login/loginindex')"><img src='~/Scripts/easyui/themes/icons/denglurizhi.png' />&nbsp;&nbsp;&nbsp;登录日志</a></li>
+                        
+                        <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/Elmah/')"><img src='~/Scripts/easyui/themes/icons/elmah_rizhi.png' />&nbsp;&nbsp;&nbsp;Elmah日志</a></li>                   
+                    }
+                    
+                    @if (User.IsInRole("部门负责人") == true)
+                    {
+                        <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/Account/bmfzindex')"><img src='~/Scripts/easyui/themes/icons/yonghu.png' />&nbsp;&nbsp;&nbsp;用户管理</a></li>
+                    }
+
+                    @if (User.IsInRole("分管领导") == true)
+                    { 
+                        <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/Account/fenguangbm?userid=@loingid')"><img src='~/Scripts/easyui/themes/icons/bumen.png' />&nbsp;&nbsp;&nbsp;分管部门</a></li>
+                    }
+
+                    <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/Account/rsetpwdindex')"><img src='~/Scripts/easyui/themes/icons/mima.png' />&nbsp;&nbsp;&nbsp;密码修改</a></li>
+                </ul>
+            </div>         
+               
+            <div title="关于我们" data-options="iconCls:'icon-about'">
+                <ul class="easyui-datalist">                  
+                    <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/home/About')"><img src='~/Scripts/easyui/themes/icons/copyright.png' />&nbsp;&nbsp;&nbsp;版权信息</a></li>
+                    <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/home/Contact')"><img src='~/Scripts/easyui/themes/icons/help1.png' />&nbsp;&nbsp;&nbsp;技术支持</a></li>
+                    <li><a style="margin-left:20px;text-decoration:none" href="javascript:void(0)" onclick="xm('/home/help')"><img src='~/Scripts/easyui/themes/icons/shouce.png' />&nbsp;&nbsp;&nbsp;用户手册</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="mainPanle" data-options="region:'center'" style="overflow: hidden;">       
+        <div id="main-tab" class="easyui-tabs" data-options="fit:true, border:false">
+            <div title="首页" data-options="iconCls:'icon-house',closable:false" style="padding: 5px;">
+                <iframe name="mainFrame" id="mainFrame" scrolling="auto" style="width:100%;height:99%" frameborder="0" src="@Url.Action("indexnew")" marginheight="0" marginwidth="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/homescript/home/index.js"></script>  
+
+
+
+            
+
+
+
+

@@ -1,0 +1,36 @@
+﻿@{
+    string dgtitle = ViewBag.muluName;
+    var sf = DateTime.Now.ToString();
+    string weizhi = "位置：目录管理>>";
+}
+
+<div id="p" class="easyui-panel" title="@weizhi@dgtitle" style="padding:5px;" data-options="fit:true, border:true ">
+    <div class="easyui-tabs" id="easytab" data-options="fit:true,border:true">
+        @*待分配*@
+        <div title="待评议" data-options="closable:false,url:'/xiangmuguanli/bushen_ywzy_daifenpei?muluName=@dgtitle&time=@sf'" style="padding: 5px;">
+        </div>
+
+        <div title="审核通过" data-options="closable:false,url:'/xiangmuguanli/bushen_ywzy_tongguo?muluName=@dgtitle&time=@sf'" style="padding:5px;">
+        </div>
+
+        @*审核未通过*@
+        <div title="审核未通过" data-options="closable:false,url:'/xiangmuguanli/bushen_ywzy_weitongguo?muluName=@dgtitle&time=@sf'" style="padding:5px;">
+        </div>
+
+
+        @*未审核*@
+        <div title="未审核" data-options="closable:false,url:'/xiangmuguanli/bushen_ywzy_weishenhe?muluName=@dgtitle&time=@sf'" style="padding:5px;">
+        </div>
+
+        <div title="部门送审" data-options="closable:false,url:'/xiangmuguanli/bushen_ywzy_bm_tj?muluName=@dgtitle&time=@sf'" style="padding: 5px;">
+        </div>
+
+        <div title="申报进度" data-options="closable:false,url:'/xiangmuguanli/bushen_ywzy_tjjd?muluName=@dgtitle&time=@sf'" style="padding: 5px;">
+        </div>
+    </div>
+</div>
+
+@section footer{
+    <script type="text/javascript" src="~/homescript/xiangmuguanli/bushen_ywzy.js">
+    </script>
+}

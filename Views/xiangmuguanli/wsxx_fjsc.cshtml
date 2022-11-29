@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    int xmid = ViewBag.xmid; ;
+    string xmname = ViewBag.xmname;
+    string dgtitle = ViewBag.xmmulu;
+}
+<table class="tc_table_cp" border="1" style="height:auto;width:80%;">
+    <tr>
+        <td width="104px">文件上传：</td>
+        <td colspan="3">
+            <div id="fileList">
+            </div>
+            <div class="cp_img_jia" id="filePicker"></div>
+        </td>
+    </tr>
+    <tr>
+        <td width="104px"></td>
+        <td colspan="3">
+            <button id="ctlBtn" class="btn btn-default">开始上传</button>
+            <button id="ctlBtn" class="btn btn-default" onclick="emptyqueen()">清空列表</button>
+        </td>
+    </tr>
+</table>
+
+<table id="upload_dg" class="easyui-datagrid" title="附件上传" style="height:auto;width:99%;">
+    <thead>
+        <tr>
+            <th data-options="field:'filename',align:'center',width:'30%'">文件名称</th>
+            <th data-options="field:'fileextension',align:'center',width:'10%'">文件扩展名</th>
+            <th data-options="field:'filesize',align:'center',width:'10%'">文件大小</th>
+            <th data-options="field:'uploadtime',align:'center',width:'30%'">上传时间</th>
+            <th data-options="field:'fileuploadID',align:'center',width:'18%',formatter: rowformater">操作</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="upload_tba">
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="feupld_del()">删 除</a>
+</div>
+
+<script type="text/javascript" src="~/Scripts/webuploader/jquery-1.8.2.min.js"></script>
+
+<script type="text/javascript" src="~/Scripts/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="~/Scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+<link href="~/CSS/webuploader.css" rel="stylesheet" />
+
+<script type="text/javascript" src="~/Scripts/webuploader/webuploader.min.js"></script>
+<link href="~/CSS/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="~/Scripts/easyui/themes/color.css">
+<link rel="stylesheet" type="text/css" href="~/Scripts/easyui/demo/demo.css">
+
+<link href="~/CSS/style.css" rel="stylesheet" />
+<link href="~/CSS/demo.css" rel="stylesheet" />
+<link href="~/CSS/font-awesome.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    var url, xmid = '@xmid', dgtitle = '@dgtitle',xmname='@xmname';
+</script>
+
+<script src="~/homescript/xiangmuguanli/wsxx_fjsc.js">
+</script>
+
+<style type="text/css">
+    .ftitle {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 0;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+</style>

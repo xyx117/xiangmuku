@@ -1,0 +1,76 @@
+﻿@model xmkgl.Models.News
+@using Microsoft.AspNet.Identity;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string author1 = User.Identity.GetUserName();
+}
+<div class="easyui-panel" title="位置：公告>>新增公告" style="padding:5px;" data-options="fit:true, border:true ">
+    @using (Html.BeginForm("Createnew", "Home", new { author = author1 }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal" style="width:98%;height:auto">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-9">
+                    <div id="editor" name="Content">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="保 存" class="btn btn-primary" />
+                    <button type="button" class="btn btn-primary" onclick="window.location.href = '@Url.Action("Indexnew", "Home")'">返回</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section footer{
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+
+    @*<link href="~/Scripts/UEditor/themes/default/css/ueditor.css" rel="stylesheet" />
+        <script src="~/Scripts/UEditor/ueditor.config.js"></script>
+        <script src="~/Scripts/UEditor/ueditor.all.js"></script>*@
+
+
+    <link href="~/ueditor/themes/default/css/ueditor.css" rel="stylesheet" />
+
+    <script src="~/ueditor/ueditor.config.js" charset="utf-8"></script>
+    <script src="~/ueditor/ueditor.all.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+        //$(function () {
+        //    Window.UEDITOR_HOME_URL = "/Scripts/UEditor/";
+        //    var editor = new baidu.editor.ui.Editor();
+        //    editor.render("Content");
+
+        //    editor.addListener("contentChange", function () {
+        //        if (editor.getContentLength(true) > 100) {
+        //            editor.execCommand("undo");
+        //        }
+        //    });
+        //});
+
+        var ue = UE.getEditor('editor', {
+
+            autoHeightEnabled: true,
+
+            autoFloatEnabled: true,
+
+            initialFrameWidth: 1000,
+
+            initialFrameHeight: 483
+
+        });
+    </script>
+}

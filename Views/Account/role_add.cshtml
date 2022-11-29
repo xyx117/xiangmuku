@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<table id="bmfzr_dg" class="easyui-datagrid" title="位置：基本设置>>用户管理" style="height:auto;">
+    <thead>
+        <tr>
+            <th data-options="field:'Id',align:'center',width:'23%'">用户名</th>
+            <th data-options="field:'name',align:'center',width:'23%'">用户名</th>            
+        </tr>
+    </thead>
+</table>
+
+
+<div id="bmfzr_toolbar">
+</div>
+
+@section footer{ 
+    <script type="text/javascript">
+        $(function () {
+            $("#bmfzr_dg").datagrid({
+                singleSelect: true,
+                async: false,
+                collapsible: true,
+                method: 'post',
+                url: '/Account/getrole',
+                toolbar: '#bmfzr_toolbar',
+                rownumbers: true,
+                pagination: false,
+                fitcolumns: true,
+                nowrap: true,
+                fit: true,
+                autoRowHeight: false,               
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        #fm {
+            margin: 0;
+            padding: 10px 30px;
+        }
+
+        .ftitle {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .fitem {
+            margin: 10px;
+        }
+            .fitem label {
+                display: inline-block;
+                width: 80px;
+            }
+            .fitem input {
+                width: 160px;
+            }
+    </style>
+}
+
+
+

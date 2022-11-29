@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string dgtitle = ViewBag.muluName;
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+    string username = User.Identity.GetUserName();
+}
+<table id="dg_shpw_wc" class="easyui-datagrid" style="height:auto;width:100%">    
+    <thead>
+        <tr>
+            <th data-options="field:'ck',checkbox:true" rowspan="2"></th>
+            <th data-options="field:'XmName',align:'center',width:'25%',formatter:TitleFormatter" rowspan="2">项目名称</th>
+            <th data-options="field:'Xuhao',align:'center',width:'5%'" rowspan="2">排名</th>
+            <th data-options="field:'zongjine',align:'center',width:'5%'" rowspan="2">金额<br />(万元)</th>
+            <th colspan="3">操作</th>
+            <th colspan="2">审核状态</th>            
+            <th data-options="field:'Beizhu',align:'center',width:'24%',formatter: TitleFormatter_jj" rowspan="2">简介</th>
+            <th data-options="field:'Chuangjianshijian',align:'center',formatter:formatDatebox,width:'9%'" rowspan="2">创建时间</th>
+        </tr>
+        <tr>
+            <th data-options="field:'xmzaishen',align:'center',width:'5%',formatter: zaishen">①</th>
+            <th data-options="field:'IDf1a',align:'center',width:'7%',formatter:pw_tijiao">②</th>
+            <th data-options="field:'xmrizhi',align:'center',width:'7%',formatter: xmrizhi">③</th>
+            <th data-options="field:'bmfzrshenhe',align:'center',width:'8%',formatter:bmfzrtubiao">部门负责人</th>
+            <th data-options="field:'pingweishenhe',align:'center',width:'6%',formatter:pwshenhebubiao">评委</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="pl_pwtj_toolbar" style="height: 32px; padding: 2px 5px; background:#ddd;">   
+    <div style="float: left;">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tijiao',plain:true" onclick="pl_tijiao()">批量提交</a>
+    </div>
+    <div style="float: right">
+        评审部门筛选:
+        <select id="suoshuxueyuan" name="suoshuxueyuan" class="easyui-combobox" style="width:200px" data-options="editable:false">
+            @foreach (var item in ViewBag.fgld_sx_bumen)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+    </div>
+</div>
+
+
+@*评委再审*@
+<div id="pwshenhe_dlg" class="easyui-dialog" style="width:470px;height:240px;padding:10px 20px" data-options="closed:'true',buttons:'#shenhe_pw_dlg'">
+    <center>
+        <form id="fm_shpw" method="post" novalidate>
+            <table cellpadding="5">
+                <tr>
+                    <td><strong>审核结果:</strong></td>
+                    <td>
+                        <input type="radio" name="shenhe" value="通过" required><span>通过</span>
+                        <input type="radio" name="shenhe" value="未通过" required><span>未通过</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>审核意见：</strong></td>
+                    <td>
+                        <input name="pwyijian" class="easyui-textbox" data-options="multiline:true" style="width:300px;height:70px">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</div>
+<div style="text-align:center;padding:5px" id="shenhe_pw_dlg">
+    <a href="#" id="shenhe_btn" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" onclick="pwshenhe_save()">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#pwshenhe_dlg').dialog('close')" style="width:80px">取消</a>
+</div>
+
+
+@*评委批量提交弹出对话框*@
+<div id="pl_tijiao_dlg" class="easyui-dialog" style="width:35%;height:auto;padding:10px 20px" data-options="closed:'true',buttons:'#bspw_pltj_btn'">
+    <div class="ftitle"></div>
+    <center>
+        <form id="tj_pw_fm" method="post" novalidate>
+            <strong>您确定要提交这些记录吗？</strong>
+        </form>
+    </center>
+    <div id="bspw_pltj_btn" style="text-align:center;padding:5px">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="pl_pwtj_save()" style="width:90px">确定</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#pl_tijiao_dlg').dialog('close')" style="width:90px">取消</a>
+    </div>
+</div>
+
+
+@*评委单个提交弹出对话框*@
+<div id="pw_tijiao_dlg" class="easyui-dialog" style="width:400px;height:180px;padding:10px 20px" data-options="closed:'true',buttons:'#bspw_tj_btn'">
+    <div class="ftitle"></div>
+    <center>
+        <form id="tj_pw_fm_dt" method="post" novalidate>
+
+            <p style="font-size:15px;"><strong>您确定要提交这条记录吗？</strong></p>
+        </form>
+    </center>
+    <div id="bspw_tj_btn" style="text-align:center;padding:5px">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconcls:'icon-ok'" onclick="tj_pw_save()" style="width:90px">确定</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconcls:'icon-cancel'" onclick="javascript: $('#pw_tijiao_dlg').dialog('close')" style="width:90px">取消</a>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/Scripts/myScript/datagrid-groupview.js"></script>
+
+<script type="text/javascript">
+    var url, dgtitle = '@dgtitle', loingid = '@loingid', username = '@username';
+</script>
+
+<script src="~/homescript/xiangmuguanli/bushen_pw_yishen.js"></script>
+<style type="text/css">    
+    .ftitle {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 5px 0;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+</style>

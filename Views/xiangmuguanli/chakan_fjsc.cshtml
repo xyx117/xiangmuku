@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "chakan_fjsc";
+    int xmid = ViewBag.xmid;
+}
+<table id="upload_dg" class="easyui-datagrid" title="附件上传" style="height:auto;width:100%;">
+    <thead>
+        <tr>
+            <th data-options="field:'filename',align:'center',width:'50%'">文件名称</th>
+            <th data-options="field:'fileextension',align:'center',width:'10%'">文件扩展名</th>
+            <th data-options="field:'filesize',align:'center',width:'10%'">文件大小</th>
+            <th data-options="field:'uploadtime',align:'center',width:'10%'">上传时间</th>
+            <th data-options="field:'fileuploadID',align:'center',width:'15%',formatter: rowformater">操作</th>
+        </tr>
+    </thead>
+</table>
+
+<script type="text/javascript">
+    var url, xmid = '@xmid';
+</script>
+
+<script src="~/homescript/xiangmuguanli/chakan_fjsc.js"></script>

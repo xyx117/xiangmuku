@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string dgtitle = ViewBag.muluName;
+    string loingid = User.Identity.GetUserId();//取到登录人员的id
+    string username = User.Identity.GetUserName();
+    string weizhi = "位置：目录管理>>";
+}
+<div class="easyui-panel" title="@weizhi@dgtitle" style="padding:5px;" data-options="fit:true, border:true ">
+    <div class="fitem" style="padding-bottom:5px">
+        <label>校长审核:</label>
+        <input id="swth_btn" name="unitState" style="width:80px" class="easyui-switchbutton" data-options="onText:'全面工作',offText:'分管工作'">
+    </div>
+    <iframe id="tubiao" src="/xiangmuguanli/bushen_ld_shen?muluname=@dgtitle&loingid=@loingid" style="width:100%;height:94%;border:0px"></iframe>    
+</div>
+
+@section footer{
+    <script type="text/javascript">
+        var dgtitle = '@dgtitle', loingid = '@loingid';
+    </script>
+    <script src="~/homescript/xiangmuguanli/bushen_ld.js">
+       
+    </script>
+}
+
+
+
+
+
+
+
+
